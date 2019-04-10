@@ -3,15 +3,22 @@
 	require_once("classes/register.class.php");
 
 	  if(!empty($_POST)){
-			$user = new User();
-			$user->setEmail($_POST['email']);
-			$user->setPassword($_POST['password']);
-		/*	$user->passwordconfirmation($_POST['password_confirmation']); */
+        if ($_POST["password"] === $_POST["password_confirmation"]) {
+            $user = new User();
+            $user->setEmail($_POST['email']);
+            $user->setPassword($_POST['password']);
+            $user->setFullname($_POST['fullname']);
 
-			$email = $_POST['email'];
-			$password = $_POST['password'];
-			$passwordConfirmation = $_POST['password_confirmation'];
-			$result = $user->register();
+            $email = $_POST['email'];
+            $password = $_POST['password'];
+            $passwordConfirmation = $_POST['password_confirmation'];
+            $fullname = $_POST['fullname'];
+            $result = $user->register();
+         }
+         else {
+            echo "<p>de wachtwoorden komen niet overeen</p>";
+         }
+
 		}
 	
 
@@ -30,6 +37,10 @@
 .hidden{
     display: none;
 }
+
+.display{
+    display: block;
+}
 </style>
 <body>
 	<div class="netflixLogin netflixLogin--register">
@@ -41,6 +52,11 @@
 					<p>
 						Some error here
 					</p>
+				</div>
+
+                <div class="form__field">
+					<label for="fullname">Fullname</label>
+					<input type="text" id="fullname" name="fullname">
 				</div>
 
 				<div class="form__field">

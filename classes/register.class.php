@@ -96,16 +96,17 @@
 			
 			try{
 				$conn= new PDO("mysql:host=mysql338.webhosting.be:3306;dbname=ID280780_phpproject;","ID280780_phpproject","test1234", null);
-				$statement = $conn->prepare("INSERT INTO users (email, password) VALUES(:email, :password)");
+				$statement = $conn->prepare("INSERT INTO users (email, password, fullname) VALUES(:email, :password, :fullname)");
 				//gaat injectie tegen, er is geen $_POST, zijn 2 gaten waar nog iets moet binnenkomen
 				$statement->bindParam(":email", $this->email);
 				$statement->bindParam(":password", $password); //hier niet $this-> gebruiekne want dat is niet veilig
-				//plakt niks in query tot je runt, bindValue stopt direct in query (ook zonder runnen)
+                $statement->bindParam(":fullname", $this->fullname);
+                //plakt niks in query tot je runt, bindValue stopt direct in query (ook zonder runnen)
 				//bindParam gaat quotes negeren
 				/*$statement->execute();*/
 				//geeft true of false terug zodat je weet of het gelukt is
                 $result = $statement->execute();
-                echo "<h1>het is gelukt!!!!!!!!</h1>";
+               // echo "<h1>het is gelukt!!!!!!!!</h1>";
 				return $result; 
 				//om te zien wat er uit komt
 			}catch (Throwable $t){
