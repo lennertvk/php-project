@@ -11,6 +11,10 @@
         $email = $_POST['email'];
         $fullname = $_POST['fullname'];
         $bio = $_POST['bio'];
+
+        $image = $_FILES['image']['name'];
+        $target = "images/profile/".basename($image);
+        move_uploaded_file($_FILES['image']['tmp_name'], $target);
         
         $result = $user->update();
     }
@@ -24,8 +28,11 @@
     <title>test</title>
 </head>
 <body>
-<form action="" method="post">
-    
+<form action="" method="post" enctype="multipart/form-data">
+    <label for="image">upload file</label>
+    <br>
+    <input type="file" name="image">
+    <br>
     <label for="fullname">fullname</label>
     <br>
     <input type="text" name="fullname" id="fullname">
@@ -36,7 +43,12 @@
     <br>
     <label for="bio">bio</label>
     <br>
-    <input type="text" name="bio" id="bio">
+    <textarea 
+      	id="text" 
+      	cols="40" 
+      	rows="4" 
+      	name="bio" 
+      	placeholder="Tell us something about yourself"></textarea>
     <br>
 
     <button type="submit" class="btnSubmit">submit</button>
