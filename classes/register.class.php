@@ -102,15 +102,16 @@
 				$statement->bindParam(":password", $password); //hier niet $this-> gebruiekne want dat is niet veilig
 				//plakt niks in query tot je runt, bindValue stopt direct in query (ook zonder runnen)
 				//bindParam gaat quotes negeren
-				$statement->execute();
+				/*$statement->execute();*/
 				//geeft true of false terug zodat je weet of het gelukt is
-				$result = $statement->execute();
+                $result = $statement->execute();
+                echo "<h1>het is gelukt!!!!!!!!</h1>";
 				return $result; 
 				//om te zien wat er uit komt
 			}catch (Throwable $t){
 				//echo "er liep iets mis";
                 //echo $t->getMessage();
-                echo "<h1>ER LIEP IETS MIS</h1>"
+                echo "<h1>ER LIEP IETS MIS</h1>";
                 return false;
 			}
 		}
