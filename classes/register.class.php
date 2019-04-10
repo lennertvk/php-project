@@ -95,7 +95,7 @@
 			$password = password_hash($this->password, PASSWORD_DEFAULT, $options); //PASSWORD_DEFAULT is constant, gaat niet wijzigen
 			
 			try{
-				$conn= new PDO("mysql:host=localhost;dbname=php-project;","root","", null);
+				$conn= new PDO("mysql:host=mysql338.webhosting.be:3306;dbname=ID280780_phpproject;","ID280780_phpproject","test1234", null);
 				$statement = $conn->prepare("INSERT INTO users (email, password) VALUES(:email, :password)");
 				//gaat injectie tegen, er is geen $_POST, zijn 2 gaten waar nog iets moet binnenkomen
 				$statement->bindParam(":email", $this->email);
