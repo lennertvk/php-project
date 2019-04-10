@@ -12,5 +12,6 @@
 </head>
 <body>
     <h1>this is the homepage</h1>
+    <a href="upload.php">upload een foto</a>
 </body>
 </html>
