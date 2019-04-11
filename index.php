@@ -1,7 +1,7 @@
 <?php
 
   $conn = mysqli_connect("mysql338.webhosting.be:3306", "ID280780_phpproject", "test1234", "ID280780_phpproject");
-  $result = mysqli_query($conn, "SELECT * FROM images");
+  $result = mysqli_query($conn, "SELECT * FROM images WHERE minified = 1");
 
 ?>
 <!DOCTYPE html>
@@ -18,7 +18,7 @@
     <?php
     while ($row = mysqli_fetch_array($result)) {
       echo "<div id='img_div'>";
-      	echo "<img src='images/".$row['image']."' >";
+      	echo "<img src='miniimages/".$row['image']."' >";
       	echo "<p>".$row['text']."</p>";
       echo "</div>";
     }

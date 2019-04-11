@@ -1,4 +1,28 @@
 <?php
+function imagecreatefromfile( $filename ) {
+	if (!file_exists($filename)) {
+			throw new InvalidArgumentException('File "'.$filename.'" not found.');
+	}
+	switch ( strtolower( pathinfo( $filename, PATHINFO_EXTENSION ))) {
+			case 'jpeg':
+			case 'jpg':
+					return imagecreatefromjpeg($filename);
+			break;
+
+			case 'png':
+					return imagecreatefrompng($filename);
+			break;
+
+			case 'gif':
+					return imagecreatefromgif($filename);
+			break;
+
+			default:
+					throw new InvalidArgumentException('File "'.$filename.'" is not valid jpg, png or gif image.');
+			break;
+	}
+}
+
 // based on code : https://codewithawa.com/posts/image-upload-using-php-and-mysql-database
 
   $conn = mysqli_connect("mysql338.webhosting.be:3306", "ID280780_phpproject", "test1234", "ID280780_phpproject");
@@ -16,16 +40,49 @@
 
   	// image file directory
   	$target = "images/".basename($image);
+  	$targetmini = "miniimages/mini".basename($image);
 
-  	$sql = "INSERT INTO images (image, text) VALUES ('$image', '$desc')";
+
+
+		$sql = "INSERT INTO images (image, text) VALUES ('$image', '$desc')";
+		$imagemininame = "mini" . $_FILES['image']['name']; 
+		$sqlmini = "INSERT INTO images (image, text, minified) VALUES ('$imagemininame', '$desc', '1')";
   	// execute query
   	mysqli_query($conn, $sql);
+  	mysqli_query($conn, $sqlmini);
 
   	if (move_uploaded_file($_FILES['image']['tmp_name'], $target)) {
   		$msg = "Image uploaded successfully";
   	}else{
   		$msg = "Failed to upload image";
-  	}
+		}
+
+		//change image size
+		
+		$width = 600;
+		$height = 600;
+
+		list($width_orig, $height_orig) = getimagesize($target);
+
+		$ratio_orig = $width_orig/$height_orig;
+
+		if ($width/$height > $ratio_orig) {
+			$width = $height*$ratio_orig;
+	 } else {
+			$height = $width/$ratio_orig;
+	 }
+
+	 	$image_p = imagecreatetruecolor($width, $height);
+		$imagem = imagecreatefromfile($target);
+		$miniimage = imagecopyresampled($image_p, $imagem, 0, 0, 0, 0, $width, $height, $width_orig, $height_orig);
+
+		imagepng($image_p, $targetmini);
+
+		if (move_uploaded_file($_FILES['image']['tmp_name'], $targetmini)) {
+  		$msg = "Image uploaded successfully";
+  	}else{
+  		$msg = "Failed to upload image";
+		}
 	}
 
   $result = mysqli_query($conn, "SELECT * FROM images");
@@ -68,14 +125,7 @@
 </head>
 <body>
 <div id="content">
-  <?php
-    while ($row = mysqli_fetch_array($result)) {
-      echo "<div id='img_div'>";
-      	echo "<img src='images/".$row['image']."' >";
-      	echo "<p>".$row['text']."</p>";
-      echo "</div>";
-    }
-  ?>
+
   <form method="POST" action="upload.php" enctype="multipart/form-data">
   	<input type="hidden" name="size" value="1000000">
   	<div>
@@ -94,66 +144,7 @@
   		<button type="submit" name="upload">POST</button>
   	</div>
   </form>
+	<a href="index.php">back to the homepage</a>
 </div>
-</body>
-</html>
-
-<!-- this is how i tried
-    <?php
-/*
-	require_once("classes\images.class.php");
-
-	  if(!empty($_POST)){
-/*
-            $image = new Image();
-            $image->setImage($_POST['image']);
-            $image->setText($_POST['text']);
-
-            $imageee = $_POST['image'];
-            $text = $_POST['text'];
-           
-           // var_dump($image);
-            $result = $image->register();
-
-            */
-/*
-            var_dump($_POST['image']);
-		}
-	
-
-*/
-
-?>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>image upload</title>
-</head>
-
-<body>
-	<div class="netflixLogin netflixLogin--register">
-		<div class="form form--login">
-			<form action="" method="post">
-				<h2 form__title>Upload image</h2>
-
-                <div class="form__field">
-					<label for="image">image</label>
-					<input type="file" id="image" name="image">
-				</div>
-                <br>
-
-				<div class="form__field">
-					<label for="text">text</label>
-					<input type="text" id="text" name="text">
-				</div>
-
-				<div class="form__field">
-					<input type="submit" value="upload" class="btn btn--primary">	
-				</div>
-			</form>
-		</div>
-	</div>
 </body>
 </html>
