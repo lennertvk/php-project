@@ -1,23 +1,56 @@
-<?php
-    require_once('classes/user.class.php');
+<?php 
 
-    if (!empty($_POST)) {
-        
-        $user = new User();
-        $user->setFullname($_POST['fullname']);
-        $user->setEmail($_POST['email']);
-        $user->setBio($_POST['bio']);
+include_once("classes/user.class.php");
 
-        $email = $_POST['email'];
-        $fullname = $_POST['fullname'];
-        $bio = $_POST['bio'];
+$user = new User();
+$user->setUser_id(1);
+$profile = $user->getUserInfo();
 
-        $image = $_FILES['image']['name'];
-        $target = "images/profile/".basename($image);
-        move_uploaded_file($_FILES['image']['tmp_name'], $target);
-        
-        $result = $user->update();
+if(!empty($_POST["edit"])) {
+    
+    if(!empty($_FILES['profileImg']['name'])) {
+        $saveImage = new User();
+        $nameWithoutSpace = preg_replace('/\s+/','',$_FILES['profileImg']['name']);
+        $nameWithoutSpaceTMP = preg_replace('/\s+/','',$_FILES['profileImg']['tmp_name']);
+        $nameWithoutSpaceSize = preg_replace('/\s+/','',$_FILES['profileImg']['size']);
+        $saveImage->SetImageName($nameWithoutSpace);
+        $saveImage->SetImageSize($nameWithoutSpaceSize);
+        $saveImage->SetImageTmpName($nameWithoutSpaceTMP);
+        $destination = $saveImage->SaveProfileImg();
+    } else {
+        $destination = $profile['image'];
     }
+
+    $user_edit = new User();
+    $user_edit->setUser_id(1);
+    $user_edit->setFullname($_POST["fullname"]);
+    $user_edit->setEmail($_POST["email"]);
+    $user_edit->setBio($_POST["bio"]);
+    $user_edit->setImage($destination);
+    if($user_edit->update()){
+        $message = "Your profile is updated.";
+    } else {
+        $error = "Something went wrong, profile isn't updated.";
+    }
+}
+
+//password update
+if(!empty($_POST["passwordedit"]) && !empty($_POST["password"]) && !empty($_POST["repassword"])){
+    if(strcmp($_POST['password'], $_POST["repassword"]) == 0){
+        $user_pass = new User();
+        $user_pass->setUser_id(1);
+         $user_pass->setPassword($_POST['password']);
+        if($user_pass->updatePassword()){
+            $message = "Password updated";
+        }
+    } else {
+        $error = "Passwoorden moeten gelijk zijn";
+    }
+} else {
+    $error = "Invullen aub.";
+}
+
+$profile = $user->getUserInfo();
 
 ?><!DOCTYPE html>
 <html lang="en">
@@ -25,32 +58,48 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>test</title>
+    <link rel="stylesheet" href="css/style.css">
+    <title>Document</title>
 </head>
 <body>
-<form action="" method="post" enctype="multipart/form-data">
-    <label for="image">upload file</label>
-    <br>
-    <input type="file" name="image">
-    <br>
-    <label for="fullname">fullname</label>
-    <br>
-    <input type="text" name="fullname" id="fullname">
-    <br>
-    <label for="email">email</label>
-    <br>
-    <input type="text" name="email" id="email">
-    <br>
-    <label for="bio">bio</label>
-    <br>
-    <textarea 
-      	id="text" 
-      	cols="40" 
-      	rows="4" 
-      	name="bio" 
-      	placeholder="Tell us something about yourself"></textarea>
-    <br>
 
-    <button type="submit" class="btnSubmit">submit</button>
+    <form method="post" action="" enctype="multipart/form-data" class="edit_profile">
+    <h2>Edit profile</h2>
+    <label for="profileImg">Mijn profielfoto</label>
+    <img src="<?php echo $profile['image'] ?>" alt="">
+    <input type="file" name="profileImg" id="profileImg" accept="image/gif, image/jpeg, image/png, image/jpg">
+
+    <div class="formitem">
+    <label for="fullname">fullname</label>
+    <input type="text" name="fullname" id="fullname" value="<?php echo $profile['fullname']; ?>">
+</div>
+
+<div class="formitem">
+    <label for="bio">Bio</label>
+    <textarea rows="4" cols="50" name="bio" id="bio"><?php echo $profile['bio'];?></textarea>
+</div>
+
+<div class="formitem">
+    <label for="email">E-mail</label>
+    <input type="email" name="email" id="email" value="<?php echo $profile['email']; ?>">
+</div>
+
+    <input type="submit" name="edit" value="Edit">
+</form>
+
+<form method="post" action="" class="edit_profile">
+    <h2>Wachtwoord aanpassen</h2>
+    <div class="formitem">
+    <label for="password">New password</label>
+    <input type="password" name="password" id="password" placeholder="New password">
+</div>
+
+<div class="formitem">
+     <label for="repassword">Retype New password</label>
+    <input type="password" name="repassword" id="repassword" placeholder="Retype New password">
+</div>
+
+    <input type="submit" name="passwordedit" value="Edit">
+</form>
 </body>
 </html>
