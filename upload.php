@@ -5,9 +5,9 @@
 
   // Initialize message variable
   $msg = "";
-
+	
   if (isset($_POST['upload'])) {
-      
+
     // Get image name
   	$image = $_FILES['image']['name'];
       
@@ -26,7 +26,8 @@
   	}else{
   		$msg = "Failed to upload image";
   	}
-  }
+	}
+
   $result = mysqli_query($conn, "SELECT * FROM images");
 ?>
 <!DOCTYPE html>
@@ -75,10 +76,10 @@
       echo "</div>";
     }
   ?>
-  <form method="POST" action="test.php" enctype="multipart/form-data">
+  <form method="POST" action="upload.php" enctype="multipart/form-data">
   	<input type="hidden" name="size" value="1000000">
   	<div>
-  	  <input type="file" name="image">
+  	  <input type="file" name="image" required>
   	</div>
   	<div>
       <textarea 
@@ -86,7 +87,8 @@
       	cols="40" 
       	rows="4" 
       	name="desc" 
-      	placeholder="Say something about this image..."></textarea>
+      	placeholder="Say something about this image..."
+				required></textarea>
   	</div>
   	<div>
   		<button type="submit" name="upload">POST</button>
@@ -119,7 +121,7 @@
 		}
 	
 
-
+*/
 
 ?>
 
