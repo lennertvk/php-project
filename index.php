@@ -15,13 +15,7 @@
 <body>
     <h1>this is the homepage</h1>
     <a href="upload.php">upload een foto</a>
-    <?php
-    while ($row = mysqli_fetch_array($result)) {
-      echo "<div id='img_div'>";
-      	echo "<img src='miniimages/".$row['image']."' >";
-      	echo "<p>".$row['text']."</p>";
-      echo "</div>";
-    }
-  ?>
+    <br>
+    <a href="edit_profile.php">pas je profiel aan</a>
 </body>
 </html>
