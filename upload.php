@@ -57,7 +57,7 @@ function imagecreatefromfile( $filename ) {
   		$msg = "Failed to upload image";
 		}
 
-		//change image size
+		//change image size -> komt van youtube video hoofdzakelijk
 		
 		$width = 600;
 		$height = 600;
