@@ -1,9 +1,9 @@
 <?php 
-
+include_once("bootstrap.php");
 include_once("classes/user.class.php");
 
 $user = new User();
-$user->setUser_id(1);
+$user->setUser_id(13);
 $profile = $user->getUserInfo();
 
 if(!empty($_POST["edit"])) {
@@ -22,7 +22,7 @@ if(!empty($_POST["edit"])) {
     }
 
     $user_edit = new User();
-    $user_edit->setUser_id(1);
+    $user_edit->setUser_id(13);
     $user_edit->setFullname($_POST["fullname"]);
     $user_edit->setEmail($_POST["email"]);
     $user_edit->setBio($_POST["bio"]);
@@ -38,7 +38,7 @@ if(!empty($_POST["edit"])) {
 if(!empty($_POST["passwordedit"]) && !empty($_POST["password"]) && !empty($_POST["repassword"])){
     if(strcmp($_POST['password'], $_POST["repassword"]) == 0){
         $user_pass = new User();
-        $user_pass->setUser_id(1);
+        $user_pass->setUser_id(13);
          $user_pass->setPassword($_POST['password']);
         if($user_pass->updatePassword()){
             $message = "Password updated";
@@ -84,7 +84,7 @@ $profile = $user->getUserInfo();
     <input type="email" name="email" id="email" value="<?php echo $profile['email']; ?>">
 </div>
 
-    <input type="submit" name="edit" value="Edit">
+    <input type="submit" name="edit" value="Update profile">
 </form>
 
 <form method="post" action="" class="edit_profile">
@@ -99,7 +99,7 @@ $profile = $user->getUserInfo();
     <input type="password" name="repassword" id="repassword" placeholder="Retype New password">
 </div>
 
-    <input type="submit" name="passwordedit" value="Edit">
+    <input type="submit" name="passwordedit" value="Update password">
 </form>
 </body>
 </html>
