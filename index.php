@@ -1,6 +1,8 @@
 <?php
+  require_once('like.php');
+  require_once('ajax/like_add.php');
 
-  $conn = mysqli_connect("mysql338.webhosting.be:3306", "ID280780_phpproject", "test1234", "ID280780_phpproject");
+  $conn= new PDO("mysql:host=localhost;dbname=php-project;","root","", null);
   $result = mysqli_query($conn, "SELECT * FROM images WHERE minified = 1");
 
 ?>
@@ -22,9 +24,17 @@
     while ($row = mysqli_fetch_array($result)) {
       echo "<div id='img_div'>";
       	echo "<img src='miniimages/".$row['image']."' >";
-      	echo "<p>".$row['text']."</p>";
+        echo "<p>".$row['text']."</p>";
+        echo "<a href='#' data-id=" .  $row['id'] . " class='like' onclick='like_image(". $row['id'] .")'>Like</a> <span id='image_". $row['id'] ."_likes'>0</span> people like this ";
       echo "</div>";
     }
   ?>
+
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+
+<script type="text/javascript" src="JS/like.js"></script>
 </body>
 </html>

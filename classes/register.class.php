@@ -1,5 +1,7 @@
 <?php
 
+//methode dat de klasse user is bv. zodat login en register niet dezelfde code hebben staan
+
     class User{
         private $email;
         private $fullname;
@@ -95,12 +97,12 @@
 			$password = password_hash($this->password, PASSWORD_DEFAULT, $options); //PASSWORD_DEFAULT is constant, gaat niet wijzigen
 			
 			try{
-				$conn= new PDO("mysql:host=mysql338.webhosting.be:3306;dbname=ID280780_phpproject;","ID280780_phpproject","test1234", null);
+                                $conn= new PDO("mysql:host=localhost;dbname=php-project;","root","", null);
 				$statement = $conn->prepare("INSERT INTO users (email, password, fullname) VALUES(:email, :password, :fullname)");
 				//gaat injectie tegen, er is geen $_POST, zijn 2 gaten waar nog iets moet binnenkomen
 				$statement->bindParam(":email", $this->email);
 				$statement->bindParam(":password", $password); //hier niet $this-> gebruiekne want dat is niet veilig
-                $statement->bindParam(":fullname", $this->fullname);
+                                $statement->bindParam(":fullname", $this->fullname);
                 //plakt niks in query tot je runt, bindValue stopt direct in query (ook zonder runnen)
 				//bindParam gaat quotes negeren
 				/*$statement->execute();*/
@@ -112,7 +114,7 @@
 			}catch (Throwable $t){
 				//echo "er liep iets mis";
                 //echo $t->getMessage();
-                echo "<h1>ER LIEP IETS MIS</h1>";
+               // echo "<h1>ER LIEP IETS MIS</h1>";
                 return false;
 			}
 		}

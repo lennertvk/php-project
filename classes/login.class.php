@@ -27,7 +27,7 @@
     public function login(){
         
         try{
-            $conn = new PDO("mysql:host=mysql338.webhosting.be:3306;dbname=ID280780_phpproject;","ID280780_phpproject","test1234", null);
+            $conn= new PDO("mysql:host=localhost;dbname=php-project;","root","", null);
             $statement = $conn->prepare("select * from users where email = :email");
             
             //parameter binden

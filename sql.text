@@ -1,0 +1,187 @@
+-- phpMyAdmin SQL Dump
+-- version 4.8.5
+-- https://www.phpmyadmin.net/
+--
+-- Host: mysql338.webhosting.be:3306
+-- Gegenereerd op: 25 apr 2019 om 11:09
+-- Serverversie: 5.7.22-22
+-- PHP-versie: 5.6.17-0+deb8u1
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `ID280780_phpproject`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Tabelstructuur voor tabel `images`
+--
+
+CREATE TABLE `images` (
+  `id` int(11) NOT NULL,
+  `image` varchar(255) NOT NULL,
+  `text` text NOT NULL,
+  `minified` tinyint(1) DEFAULT NULL,
+  `image_likes` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Gegevens worden geëxporteerd voor tabel `images`
+--
+
+INSERT INTO `images` (`id`, `image`, `text`, `minified`, `image_likes`) VALUES
+(113, 'downloads.jpg', 'test jpg\r\n', NULL, 5),
+(114, 'minidownloads.jpg', 'test jpg\r\n', 1, 0),
+(115, '2019-02-20_11h38_35.png', 'cool', NULL, 2),
+(116, 'mini2019-02-20_11h38_35.png', 'cool', 1, 5),
+(117, '2019-01-23_19h01_20.png', 'test 23/04/2019', NULL, 1),
+(118, 'mini2019-01-23_19h01_20.png', 'test 23/04/2019', 1, 0),
+(119, '2019-01-29_13h57_59.png', '1\r\n', NULL, 0),
+(120, 'mini2019-01-29_13h57_59.png', '1\r\n', 1, 2),
+(121, '2019-01-30_14h55_53.png', 'jdsklmjf', NULL, 0),
+(122, 'mini2019-01-30_14h55_53.png', 'jdsklmjf', 1, 0),
+(123, '2019-01-30_14h54_11.png', 'fsqf', NULL, 0),
+(124, 'mini2019-01-30_14h54_11.png', 'fsqf', 1, 0),
+(125, '2019-01-30_14h06_30.png', 'dsqf', NULL, 0),
+(126, 'mini2019-01-30_14h06_30.png', 'dsqf', 1, 0),
+(127, '2019-03-11_13h01_59.png', 'fsqd', NULL, 0),
+(128, 'mini2019-03-11_13h01_59.png', 'fsqd', 1, 0),
+(129, '2019-03-01_11h41_31.png', 'fsqfqs', NULL, 0),
+(130, 'mini2019-03-01_11h41_31.png', 'fsqfqs', 1, 0),
+(131, '2019-04-01_12h54_04.png', 'sqff', NULL, 0),
+(132, 'mini2019-04-01_12h54_04.png', 'sqff', 1, 0),
+(133, '2019-04-02_14h21_29.png', 'fsqffd', NULL, 0),
+(134, 'mini2019-04-02_14h21_29.png', 'fsqffd', 1, 0),
+(135, '2019-04-15_16h44_17.png', 'fsqf', NULL, 0),
+(136, 'mini2019-04-15_16h44_17.png', 'fsqf', 1, 0),
+(137, '2019-03-13_22h18_54.png', 'fsqdfdf', NULL, 0),
+(138, 'mini2019-03-13_22h18_54.png', 'fsqdfdf', 1, 0),
+(139, '2019-04-09_15h08_36.png', 'dfqsf', NULL, 0),
+(140, 'mini2019-04-09_15h08_36.png', 'dfqsf', 1, 0),
+(141, '2019-03-05_16h19_03.png', 'qsfsdf', NULL, 0),
+(142, 'mini2019-03-05_16h19_03.png', 'qsfsdf', 1, 0),
+(143, '2019-01-23_19h01_20.png', 'fdsq', NULL, 0),
+(144, 'mini2019-01-23_19h01_20.png', 'fdsq', 1, 0),
+(145, '2019-01-23_19h01_20.png', 'f', NULL, 0),
+(146, 'mini2019-01-23_19h01_20.png', 'f', 1, 0),
+(147, '2019-01-28_14h12_15.png', 'fsdqf', NULL, 0),
+(148, 'mini2019-01-28_14h12_15.png', 'fsdqf', 1, 0),
+(149, '2019-01-28_14h12_24.png', 'dsfq', NULL, 0),
+(150, 'mini2019-01-28_14h12_24.png', 'dsfq', 1, 0),
+(151, '2019-01-28_14h12_15.png', 'fsdqf', NULL, 0),
+(152, 'mini2019-01-28_14h12_15.png', 'fsdqf', 1, 0),
+(153, '2019-01-28_14h12_15.png', 'fsdqf', NULL, 0),
+(154, 'mini2019-01-28_14h12_15.png', 'fsdqf', 1, 0),
+(155, '2019-01-28_14h12_24.png', 'fsdfqsdfqs', NULL, 0),
+(156, 'mini2019-01-28_14h12_24.png', 'fsdfqsdfqs', 1, 0),
+(157, '2019-01-29_13h57_59.png', 'fsfqsdf', NULL, 0),
+(158, 'mini2019-01-29_13h57_59.png', 'fsfqsdf', 1, 0),
+(159, '2019-01-30_14h06_30.png', 'dsqfsdf', NULL, 0),
+(160, 'mini2019-01-30_14h06_30.png', 'dsqfsdf', 1, 0),
+(161, '2019-01-30_14h54_11.png', 'fsdqdf', NULL, 0),
+(162, 'mini2019-01-30_14h54_11.png', 'fsdqdf', 1, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Tabelstructuur voor tabel `likes`
+--
+
+CREATE TABLE `likes` (
+  `id` int(11) NOT NULL,
+  `id_image` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Gegevens worden geëxporteerd voor tabel `likes`
+--
+
+INSERT INTO `likes` (`id`, `id_image`, `user_id`) VALUES
+(5, 116, 1234),
+(8, 117, 1234),
+(9, 120, 1234),
+(10, 120, 0),
+(11, 115, 0),
+(12, 115, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Tabelstructuur voor tabel `users`
+--
+
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_bin NOT NULL,
+  `fullname` varchar(255) COLLATE utf8mb4_bin NOT NULL,
+  `password` varchar(255) COLLATE utf8mb4_bin NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+--
+-- Gegevens worden geëxporteerd voor tabel `users`
+--
+
+INSERT INTO `users` (`id`, `email`, `fullname`, `password`) VALUES
+(12, 'test1', 'test1', '$2y$16$G7qAO2Xy0BoG9oE0xCoVk.oZQ.n3PfAEpjxX1PO45YaoiNBXhdHLC'),
+(13, 'skdjfqmlkjd', 'lennert', '$2y$16$4omT0U37AsEVvGogr6gUIeFpRBzpZPjNV7KOkJiqQVKcctQ6XxxHu');
+
+--
+-- Indexen voor geëxporteerde tabellen
+--
+
+--
+-- Indexen voor tabel `images`
+--
+ALTER TABLE `images`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexen voor tabel `likes`
+--
+ALTER TABLE `likes`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexen voor tabel `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT voor geëxporteerde tabellen
+--
+
+--
+-- AUTO_INCREMENT voor een tabel `images`
+--
+ALTER TABLE `images`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=163;
+
+--
+-- AUTO_INCREMENT voor een tabel `likes`
+--
+ALTER TABLE `likes`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT voor een tabel `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

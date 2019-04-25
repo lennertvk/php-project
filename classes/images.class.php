@@ -38,7 +38,7 @@
         }
         public function register(){            
 			//try{
-				$conn= new PDO("mysql:host=mysql338.webhosting.be:3306;dbname=ID280780_phpproject;","ID280780_phpproject","test1234", null);
+                                $conn= new PDO("mysql:host=localhost;dbname=php-project;","root","", null);
 				$statement = $conn->prepare("INSERT INTO images (image, text) VALUES(:image, :text)");
                 $statement->bindParam(":image", $this->image);
 				$statement->bindParam(":text", $this->text); 
