@@ -8,6 +8,7 @@
         private $password;
         private $passwordconfirmation;
 
+
         /**
          * Get the value of email
          */ 
@@ -88,35 +89,62 @@
                 return $this;
         }
 
-        public function register(){
-            //@todo: form validation
-            
+        public function register(){            
             $options = [
-				'cost' => 16, //je schrijft 2^14, hash wordt dus 4096x uitgevoerd, hacker moet gokken welke macht wij gekozen hebben, duurt ook langer, met brute force kan je veel minder pogingen doen per minuut
-			];
-			$password = password_hash($this->password, PASSWORD_DEFAULT, $options); //PASSWORD_DEFAULT is constant, gaat niet wijzigen
-			
+                'cost' => 16, 
+            ];
+
+            $password = password_hash($this->password, PASSWORD_DEFAULT, $options); 
+            
 			try{
-                                $conn= new PDO("mysql:host=localhost;dbname=php-project;","root","", null);
+                $conn= new PDO("mysql:host=localhost;dbname=php-project;","root","", null);
 				$statement = $conn->prepare("INSERT INTO users (email, password, fullname) VALUES(:email, :password, :fullname)");
-				//gaat injectie tegen, er is geen $_POST, zijn 2 gaten waar nog iets moet binnenkomen
 				$statement->bindParam(":email", $this->email);
-				$statement->bindParam(":password", $password); //hier niet $this-> gebruiekne want dat is niet veilig
-                                $statement->bindParam(":fullname", $this->fullname);
-                //plakt niks in query tot je runt, bindValue stopt direct in query (ook zonder runnen)
-				//bindParam gaat quotes negeren
-				/*$statement->execute();*/
-				//geeft true of false terug zodat je weet of het gelukt is
+				$statement->bindParam(":password", $password); 
+                $statement->bindParam(":fullname", $this->fullname);
+
                 $result = $statement->execute();
-               // echo "<h1>het is gelukt!!!!!!!!</h1>";
-				return $result; 
-				//om te zien wat er uit komt
+                if($result === true){
+                    header("Location: index.php");
+                }
+                return $result; 
+                
 			}catch (Throwable $t){
-				//echo "er liep iets mis";
-                //echo $t->getMessage();
-               // echo "<h1>ER LIEP IETS MIS</h1>";
+
                 return false;
+
 			}
-		}
+        }
+        
+        public function login(){
+        
+            try{
+                $conn= new PDO("mysql:host=localhost;dbname=php-project;","root","", null);
+                $statement = $conn->prepare("select * from users where email = :email");
+                
+                //parameter binden
+                $statement->bindParam(":email",$this->email);
+                $result = $statement->execute();
+                
+                //array overzetten naar variable
+                $user = $statement->fetch(PDO::FETCH_ASSOC);
+                
+                if (password_verify($this->password, $user['password'])) {
+                    //echo 'Password is valid!';
+                    session_start();
+                    header('Location: index.php');
+                    return true;
+                }
+                 else {
+                     echo 'Password is invalid!';
+                    //display error message
+                    return false;
+            
+                }
+            }
+            catch (Throwable $t){
+                echo "<h1>ER LIEP IETS MIS</h1>";
+            }
+        }
 
         }

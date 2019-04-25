@@ -1,6 +1,6 @@
 <?php
 
-	require_once("classes/register.class.php");
+	require_once("classes/users.class.php");
 
 	  if(!empty($_POST)){
         if ($_POST["password"] === $_POST["password_confirmation"]) {
@@ -78,38 +78,5 @@
 			</form>
 		</div>
 	</div>
-    <!--
-	<script
-  src="https://code.jquery.com/jquery-3.3.1.min.js"
-  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-  crossorigin="anonymous"></script>
-	<script>
-	$('#email').keyup((e)=>{
-		let textinput = $('#email').val();
-		//console.log(textinput);
-
-		$.ajax({
-			method: "GET",
-			url: "ajax/username.php",
-			data: { textinput: textinput },
-			dataType: 'json'
-			})
-
-			console.log($result.status);
-	});
-
-
-		// keyup
-	//tekstvak uitlezen
-	// ajax met jquery axios of fetch
-		// text moet meegestuurd worden van de username
-	
-	//nu naar php
-	// statische methode aan klasse user geven ==> user::available('username')
-	//json antwoord jaa/nee
-
-	// terug naar js in de frontend ui update
-	</script>
-    -->
 </body>
 </html>

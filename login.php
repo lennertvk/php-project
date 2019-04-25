@@ -1,6 +1,6 @@
 <?php
     
-    require_once("classes/login.class.php");
+    require_once("classes/users.class.php");
 
     if(!empty($_POST['Email']) && !empty($_POST['Password'])){
         //is het formulier compleet?
