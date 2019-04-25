@@ -83,7 +83,8 @@ class User {
         
         public function getUserInfo() {
                 //DB CONNECTIE
-                $conn= new PDO("mysql:host=localhost;dbname=php-project;","root","", null);
+                $conn = Db::getInstance();
+                //$conn= new PDO("mysql:host=localhost;dbname=php-project;","root","", null);
 
                 //QUERY WHERE USER = $_SESSION
                 $statement = $conn->prepare("SELECT * FROM users WHERE id = :user_id LIMIT 1");
@@ -95,7 +96,8 @@ class User {
 
         public function update() {
                 //DB CONNECTIE
-                $conn= new PDO("mysql:host=localhost;dbname=php-project;","root","", null);
+                $conn = Db::getInstance();
+                //$conn= new PDO("mysql:host=localhost;dbname=php-project;","root","", null);
 
                 //QUERY UPDATE
                 $statement = $conn->prepare("UPDATE users SET fullname=:fullname,email=:email,bio=:bio,image=:image WHERE id = :user_id");
@@ -109,7 +111,8 @@ class User {
         }
 
         public function updatePassword() {
-                $conn= new PDO("mysql:host=localhost;dbname=php-project;","root","", null);
+                $conn = Db::getInstance();
+                //$conn= new PDO("mysql:host=localhost;dbname=php-project;","root","", null);
                 $statement = $conn->prepare("UPDATE users SET password = :password WHERE id = :user_id");
                 $statement->bindParam(":user_id", $this->user_id);
                 $statement->bindParam(":password", $this->password);
