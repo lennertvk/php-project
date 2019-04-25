@@ -5,6 +5,8 @@
   $conn= new PDO("mysql:host=localhost;dbname=php-project;","root","", null);
   $result = mysqli_query($conn, "SELECT * FROM images WHERE minified = 1");
 
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,6 +17,12 @@
     <title>Homepage</title>
 </head>
 <body>
+<form action="search.php" method="get">
+    <label>search</label>
+    <input type="text" name="search" />
+    <input type="submit" value="Search" />
+    </form>
+
     <h1>this is the homepage</h1>
     <a href="upload.php">upload een foto</a>
     <br>
