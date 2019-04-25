@@ -1,11 +1,12 @@
 <?php
     echo 'test';
+    
     function image_exists($image_id){
         $image_id = (int)$image_id;
         $conn= new PDO("mysql:host=localhost;dbname=php-project;","root","", null);
         $result = mysqli_query($conn, "SELECT count(*) FROM images WHERE id = $image_id");
         $row = mysqli_fetch_array($result);    
-        if($row == true){
+        if($row == true){ 
             return true;
         }else{
             return false;
