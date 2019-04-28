@@ -1,8 +1,10 @@
 <?php
+  require_once('bootstrap.php');
  // require_once('like.php');
   require_once('ajax/like_add.php');
 
-  $conn= new PDO("mysql:host=localhost;dbname=php-project;","root","", null);
+  $conn = Db::getInstance();
+  //$conn= new PDO("mysql:host=localhost;dbname=php-project;","root","root", null);
   $statement = $conn->prepare("SELECT * FROM images WHERE minified = 1");
   $result = $statement->execute();  
   $result = $statement->fetchAll();
@@ -35,6 +37,7 @@
       	echo "<img src='miniimages/".$row['image']."' >";
         echo "<p>".$row['text']."</p>";
         echo "<a href='#' data-id=" .  $row['id'] . " class='like' onclick='like_image(". $row['id'] .")'>Like</a> <span id='image_". $row['id'] ."_likes'>0</span> people like this ";
+        echo "<a href='comment.php?id=" . $row['id'] . "'>Plaats een comment</a>";
       echo "</div>";
     }
     
