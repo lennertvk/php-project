@@ -1,6 +1,6 @@
 <?php 
 include_once("bootstrap.php");
-include_once("classes/user.class.php");
+//include_once("classes/user.class.php");
 
 $user = new User();
 $user->setUser_id(13);
