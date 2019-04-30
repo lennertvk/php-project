@@ -18,31 +18,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Homepage</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<form action="search.php" method="get">
-    <label>search</label>
-    <input type="text" name="search" />
+  <?php include_once('includes/nav.inc.php')?>
+
+  <form action="search.php" method="get" class="search">
+    <input type="text" name="search" placeholder="Search" />
     <input type="submit" value="Search" />
-    </form>
+  </form>
+    
 
     <h1>this is the homepage</h1>
     <a href="upload.php">upload een foto</a>
     <br>
     <a href="edit_profile.php">pas je profiel aan</a>
-
+<div class="container">
     <?php
     foreach($result as $row) {
       echo "<div id='img_div'>";
       	echo "<img src='miniimages/".$row['image']."' >";
-        echo "<p>".$row['text']."</p>";
+        echo "<p class='beschrijving'>".$row['text']."</p>";
         echo "<a href='#' data-id=" .  $row['id'] . " class='like' onclick='like_image(". $row['id'] .")'>Like</a> <span id='image_". $row['id'] ."_likes'>0</span> people like this ";
-        echo "<a href='comment.php?id=" . $row['id'] . "'>Plaats een comment</a>";
+        echo "<a href='comment.php?id=" . $row['id'] . "'class='comment'>Comment</a>";
       echo "</div>";
     }
     
   ?>
-
+</div>
 <script
   src="https://code.jquery.com/jquery-3.3.1.min.js"
   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
