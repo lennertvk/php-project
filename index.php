@@ -75,6 +75,7 @@
         $statement2 = $conn->prepare("SELECT COUNT(*) FROM likes WHERE user_id = 1 AND id_image =".$row['id']."");
         $result2 = $statement2->execute();  
         $result2 = $statement2->fetchColumn(); 
+        //var_dump($result2);
         
         echo "<p class='beschrijving'>".$row['text']."</p>";
         echo "<a href='comment.php?id=" . $row['id'] . "'class='comment'>Comment</a>";
@@ -103,11 +104,12 @@
   src="https://code.jquery.com/jquery-3.3.1.min.js"
   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
   crossorigin="anonymous"></script>
-<script>
-    $(document).ready(functio n(){
+  <script>
+    $(document).ready(function(){
 
         /////LIKE
         $('.like').click(function(){
+         //   e.preventDefault();
             let postid = $(this).attr('id');
 
             $.ajax({
@@ -124,6 +126,7 @@
         /////unlike
 
         $('.unlike').click(function(){
+           // e.preventDefault();
             let postid = $(this).attr('id');
 
             $.ajax({

@@ -56,17 +56,23 @@
       	echo "<img src='miniimages/".$row['image']."' >";
         echo "<p>".$row['text']."</p>";
 
+        if(isset($_POST['liked'])){
+            echo '<span><a href = "" class="unlike" id= "'.$row['id'].'">UNLIKE</a></span>';
+        }elseif (isset($_POST['unliked'])) {
+            echo '<span><a href = "" class="like"  id= "'.$row['id'].'">LIKE</a></span>';
+        }else{
+
         $statement2 = $conn->prepare("SELECT COUNT(*) FROM likes WHERE user_id = 1 AND id_image =".$row['id']."");
         $result2 = $statement2->execute();  
         $result2 = $statement2->fetchColumn(); 
-        
+        var_dump($result2);
         
         if($result2 == 1){
             echo '<span><a href = "" class="unlike" id= "'.$row['id'].'">UNLIKE</a></span>';
         }else{
             echo '<span><a href = "" class="like"  id= "'.$row['id'].'">LIKE</a></span>';
         }
-        
+    }
         echo '<br>';
 
         echo '<span>Deze post heeft <span>'.$row['image_likes'].'</span> likes</span>';
@@ -84,6 +90,7 @@
   src="https://code.jquery.com/jquery-3.3.1.min.js"
   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
   crossorigin="anonymous"></script>
+
 <script>
     $(document).ready(function(){
 
@@ -101,6 +108,8 @@
                 },
                 succes: function(){}
             });
+
+
         });
         /////unlike
 
@@ -117,6 +126,8 @@
                 },
                 succes: function(){}
             });
+
+
         });
 
 
