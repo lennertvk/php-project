@@ -31,6 +31,8 @@
 <head>
   <meta charset="UTF-8">
   <title>Registration</title>
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <style>
 .hidden{
@@ -55,26 +57,30 @@
 
                 <div class="form__field">
 					<label for="fullname">Fullname</label>
-					<input type="text" id="fullname" name="fullname">
+					<input type="text" id="fullname" name="fullname" placeholder="Fullname">
 				</div>
 
 				<div class="form__field">
 					<label for="email">Email</label>
-					<input type="text" id="email" name="email">
+					<input type="text" id="email" name="email" placeholder="Email">
 				</div>
 				<div class="form__field">
 					<label for="password">Password</label>
-					<input type="password" id="password" name="password">
+					<input type="password" id="password" name="password" placeholder="Password">
 				</div>
 
                 <div class="form__field">
 					<label for="password_confirmation">Confirm your password</label>
-					<input type="password" id="password_confirmation" name="password_confirmation">
+					<input type="password" id="password_confirmation" name="password_confirmation" placeholder="Confirm password">
 				</div>
 
 				<div class="form__field">
 					<input type="submit" value="Sign me up!" class="btn btn--primary">	
 				</div>
+
+				<div>
+                    <a href="login.php" class="to_login">Already have an account? Login.</a>
+                </div>
 			</form>
 		</div>
 	</div>

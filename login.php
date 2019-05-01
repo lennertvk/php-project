@@ -29,6 +29,7 @@ sql injectie
 <head>
     <meta charset="UTF-8">
     <title>IMDFlix</title>
+    <link rel="stylesheet" href="css/reset.css">    
     <link rel="stylesheet" href="css/style.css">
 </head>
 
@@ -48,16 +49,20 @@ sql injectie
 
                 <div class="form__field">
                     <label for="Email">Email</label>
-                    <input type="text" name="Email" id="Email">
+                    <input type="text" name="Email" id="Email" placeholder="Your email here">
                 </div>
                 <div class="form__field">
                     <label for="Password">Password</label>
-                    <input type="password" id="Password" name="Password">
+                    <input type="password" id="Password" name="Password" placeholder="Your password here">
                 </div>
 
                 <div class="form__field">
                     <input type="submit" value="Sign in" class="btn btn--primary">
                     <input type="checkbox" id="rememberMe"><label for="rememberMe" class="label__inline">Remember me</label>
+                </div>
+
+                <div>
+                    <a href="register.php" class="registerlink">No account yet? Register here.</a>
                 </div>
             </form>
         </div>

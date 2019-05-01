@@ -125,6 +125,7 @@ function imagecreatefromfile( $filename ) {
 </style>
 </head>
 <body>
+<?php include_once('includes/nav.inc.php')?>
 <div id="content">
 
   <form method="POST" action="upload.php" enctype="multipart/form-data">

@@ -1,7 +1,9 @@
 <?php
+  require_once('bootstrap.php');
  // require_once('like.php');
 
-  $conn= new PDO("mysql:host=localhost;dbname=php-project;","root","", null);
+  $conn = Db::getInstance();
+  //$conn= new PDO("mysql:host=localhost;dbname=php-project;","root","root", null);
   $statement = $conn->prepare("SELECT * FROM images WHERE minified = 1");
   $result = $statement->execute();  
   $result = $statement->fetchAll();
@@ -46,20 +48,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Homepage</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<form action="search.php" method="get">
-    <label>search</label>
-    <input type="text" name="search" />
+  <?php include_once('includes/nav.inc.php')?>
+
+  <form action="search.php" method="get" class="search">
+    <input type="text" name="search" placeholder="Search" />
     <input type="submit" value="Search" />
-    </form>
+  </form>
+    
 
     <h1>this is the homepage</h1>
     <h1>like_add veranderen nog niet goed structuur van mapje veranderen!!</h1>
     <a href="upload.php">upload een foto</a>
     <br>
     <a href="edit_profile.php">pas je profiel aan</a>
-<?php
+<div class="container">
+    <?php
     foreach($result as $row) {
         echo "<div class='img_div'>";
       	echo "<img src='miniimages/".$row['image']."' >";
@@ -69,7 +76,10 @@
         $result2 = $statement2->execute();  
         $result2 = $statement2->fetchColumn(); 
         
-        
+        echo "<p class='beschrijving'>".$row['text']."</p>";
+        echo "<a href='comment.php?id=" . $row['id'] . "'class='comment'>Comment</a>";
+
+
         if($result2 == 1){
             echo '<span><a href = "" class="unlike" id= "'.$row['id'].'">UNLIKE</a></span>';
         }else{
