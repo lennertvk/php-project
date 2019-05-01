@@ -1,12 +1,8 @@
 <?php
- // require_once('like.php');
 
-  $conn= new PDO("mysql:host=localhost;dbname=php-project;","root","", null);
-  $statement = $conn->prepare("SELECT * FROM images WHERE minified = 1");
-  $result = $statement->execute();  
-  $result = $statement->fetchAll();
+ $conn= new PDO("mysql:host=localhost;dbname=php-project;","root","", null);
 
-  if(isset($_POST['liked'])){
+ if(isset($_POST['liked'])){
     $postid = $_POST['postid'];
     $statement = $conn->prepare("SELECT * FROM images WHERE id = $postid");
     $result = $statement->execute();
@@ -39,28 +35,23 @@
  }
 
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Homepage</title>
+    <title>like test</title>
 </head>
 <body>
-<form action="search.php" method="get">
-    <label>search</label>
-    <input type="text" name="search" />
-    <input type="submit" value="Search" />
-    </form>
+    <div class="content">
+    <?php
+    $statement = $conn->prepare("SELECT * FROM images WHERE minified = 1");
+    $result = $statement->execute();  
+    $result = $statement->fetchAll();
 
-    <h1>this is the homepage</h1>
-    <h1>like_add veranderen nog niet goed structuur van mapje veranderen!!</h1>
-    <a href="upload.php">upload een foto</a>
-    <br>
-    <a href="edit_profile.php">pas je profiel aan</a>
-<?php
-    foreach($result as $row) {
+        foreach($result as $row) {
         echo "<div class='img_div'>";
       	echo "<img src='miniimages/".$row['image']."' >";
         echo "<p>".$row['text']."</p>";
@@ -94,7 +85,7 @@
   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
   crossorigin="anonymous"></script>
 <script>
-    $(document).ready(functio n(){
+    $(document).ready(function(){
 
         /////LIKE
         $('.like').click(function(){
@@ -132,5 +123,6 @@
 
     });
 </script>
+  
 </body>
 </html>
