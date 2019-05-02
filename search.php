@@ -3,7 +3,7 @@
     require_once('bootstrap.php');
     $conn = Db::getInstance();
     $search = new Post();
-    $search->search();
+    $searchResult=$search->search();
 ?>
  
 <!DOCTYPE html>
@@ -24,7 +24,6 @@
     else{
         echo "no results";
     }*/
-    var_dump($searchResult);
     
     foreach($searchResult as $key):
 ?>

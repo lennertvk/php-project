@@ -23,7 +23,26 @@ class Post{
 
         return $this;
     }
+/**
+     * Get the value of searchResult
+     */ 
+    public function getSearchResult()
+    {
+        return $this->searchResult;
+    }
 
+    /**
+     * Set the value of searchResult
+     *
+     * @return  self
+     */ 
+    public function setSearchResult($searchResult)
+    {
+        $this->searchResult = $searchResult;
+
+        return $this;
+    }
+    
     public function search(){
         $query = $_GET['search'];
         $conn = Db::getInstance();
@@ -33,6 +52,9 @@ class Post{
         $searchResult = $statement -> fetchAll();
         //return $searchResult;
         var_dump( $searchResult);
+        return $searchResult;
     }
+
+    
 }
 ?>
