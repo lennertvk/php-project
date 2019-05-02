@@ -25,7 +25,8 @@ function imagecreatefromfile( $filename ) {
 
 // based on code : https://codewithawa.com/posts/image-upload-using-php-and-mysql-database
 
-  $conn = mysqli_connect("mysql338.webhosting.be:3306", "ID280780_phpproject", "test1234", "ID280780_phpproject");
+  $conn = mysqli_connect("localhost", "root", "", "php-project",0);
+
 
   // Initialize message variable
   $msg = "";

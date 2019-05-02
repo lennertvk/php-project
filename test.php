@@ -1,14 +1,8 @@
 <?php
-  require_once('bootstrap.php');
- // require_once('like.php');
 
-  $conn = Db::getInstance();
-  //$conn= new PDO("mysql:host=localhost;dbname=php-project;","root","root", null);
-  $statement = $conn->prepare("SELECT * FROM images WHERE minified = 1");
-  $result = $statement->execute();  
-  $result = $statement->fetchAll();
+ $conn= new PDO("mysql:host=localhost;dbname=php-project;","root","", null);
 
-  if(isset($_POST['liked'])){
+ if(isset($_POST['liked'])){
     $postid = $_POST['postid'];
     $statement = $conn->prepare("SELECT * FROM images WHERE id = $postid");
     $result = $statement->execute();
@@ -41,52 +35,44 @@
  }
 
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Homepage</title>
-    <link rel="stylesheet" href="css/reset.css">
-    <link rel="stylesheet" href="css/style.css">
+    <title>like test</title>
 </head>
 <body>
-  <?php include_once('includes/nav.inc.php')?>
-
-  <form action="search.php" method="get" class="search">
-    <input type="text" name="search" placeholder="Search" />
-    <input type="submit" value="Search" />
-  </form>
-    
-
-    <h1>this is the homepage</h1>
-    <h1>like_add veranderen nog niet goed structuur van mapje veranderen!!</h1>
-    <a href="upload.php">upload een foto</a>
-    <br>
-    <a href="edit_profile.php">pas je profiel aan</a>
-<div class="container">
+    <div class="content">
     <?php
-    foreach($result as $row) {
+    $statement = $conn->prepare("SELECT * FROM images WHERE minified = 1");
+    $result = $statement->execute();  
+    $result = $statement->fetchAll();
+
+        foreach($result as $row) {
         echo "<div class='img_div'>";
       	echo "<img src='miniimages/".$row['image']."' >";
         echo "<p>".$row['text']."</p>";
 
+        if(isset($_POST['liked'])){
+            echo '<span><a href = "" class="unlike" id= "'.$row['id'].'">UNLIKE</a></span>';
+        }elseif (isset($_POST['unliked'])) {
+            echo '<span><a href = "" class="like"  id= "'.$row['id'].'">LIKE</a></span>';
+        }else{
+
         $statement2 = $conn->prepare("SELECT COUNT(*) FROM likes WHERE user_id = 1 AND id_image =".$row['id']."");
         $result2 = $statement2->execute();  
         $result2 = $statement2->fetchColumn(); 
-        //var_dump($result2);
+        var_dump($result2);
         
-        echo "<p class='beschrijving'>".$row['text']."</p>";
-        echo "<a href='comment.php?id=" . $row['id'] . "'class='comment'>Comment</a>";
-
-
         if($result2 == 1){
             echo '<span><a href = "" class="unlike" id= "'.$row['id'].'">UNLIKE</a></span>';
         }else{
             echo '<span><a href = "" class="like"  id= "'.$row['id'].'">LIKE</a></span>';
         }
-        
+    }
         echo '<br>';
 
         echo '<span>Deze post heeft <span>'.$row['image_likes'].'</span> likes</span>';
@@ -104,12 +90,12 @@
   src="https://code.jquery.com/jquery-3.3.1.min.js"
   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
   crossorigin="anonymous"></script>
-  <script>
+
+<script>
     $(document).ready(function(){
 
         /////LIKE
         $('.like').click(function(){
-         //   e.preventDefault();
             let postid = $(this).attr('id');
 
             $.ajax({
@@ -122,11 +108,12 @@
                 },
                 succes: function(){}
             });
+
+
         });
         /////unlike
 
         $('.unlike').click(function(){
-           // e.preventDefault();
             let postid = $(this).attr('id');
 
             $.ajax({
@@ -139,11 +126,14 @@
                 },
                 succes: function(){}
             });
+
+
         });
 
 
 
     });
 </script>
+  
 </body>
 </html>
