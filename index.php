@@ -140,9 +140,7 @@
                 succes: function(){}
             });
         });
-
-
-
+    
     });
 </script>
 </body>

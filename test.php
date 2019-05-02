@@ -47,11 +47,14 @@
 <body>
     <div class="content">
     <?php
-    $statement = $conn->prepare("SELECT * FROM images WHERE minified = 1");
+    if(isset($_POST['loadmore'])){
+        var_dump($conn);
+    }
+    $statement = $conn->prepare("SELECT * FROM images WHERE minified = 1 LIMIT 2");
     $result = $statement->execute();  
     $result = $statement->fetchAll();
 
-        foreach($result as $row) {
+    foreach($result as $row) {
         echo "<div class='img_div'>";
       	echo "<img src='miniimages/".$row['image']."' >";
         echo "<p>".$row['text']."</p>";
@@ -85,6 +88,10 @@
     
   ?>
     </div>
+    <br>
+    <span id="testloadmore"></span>
+    <br>
+    <button class="loadmore" id="loadmorebtn">Load more images</button>
 
 <script
   src="https://code.jquery.com/jquery-3.3.1.min.js"
@@ -130,7 +137,34 @@
 
         });
 
+        let start = 0;
+        let limit = 10;
 
+        function getData(){
+            let ajax =  new XMLHttpRequest();
+            ajax.open("GET", "Http.php?start=" + start + "&limit" + limit, true);
+            ajax.send();
+
+            ajax.onreadystatechange = function(){
+                if(this.readyState == 4 && this.status == 200){
+                    let data = JSON.parse(this.responseText);
+                    let html = "";
+
+                    for(let i = 0; i < data.length; i++){
+                        html += "<p>";
+                        html += data[i].text
+                        html += "</p>";
+                    }
+                   document.getElementById("testloadmore").innerHTML += html;
+                   start = start + limit;
+                }
+            };
+        };
+
+        getData();
+
+        $('#loadmorebtn').click(getData);
+        
 
     });
 </script>
