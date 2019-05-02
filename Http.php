@@ -16,11 +16,10 @@ class Http{
 
 if(isset($_GET["start"])){
     $start = $_GET["start"];
-   // $limit = $_GET["limit"];
-   $limit = 1;
+    $limit = $_GET["limit"];
+  // $limit = 1;
 
     $http = new Http();
     $data = $http->get_data($start, $limit);
-
     echo json_encode($data);
 }

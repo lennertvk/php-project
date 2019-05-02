@@ -47,6 +47,7 @@
 <body>
     <div class="content">
     <?php
+    /*
     if(isset($_POST['loadmore'])){
         var_dump($conn);
     }
@@ -85,7 +86,7 @@
    //     var_dump($row);
         echo "</div>";
     }
-    
+    */
   ?>
     </div>
     <br>
@@ -138,11 +139,11 @@
         });
 
         let start = 0;
-        let limit = 10;
+        let limit = 2;
 
         function getData(){
             let ajax =  new XMLHttpRequest();
-            ajax.open("GET", "Http.php?start=" + start + "&limit" + limit, true);
+            ajax.open("GET", "Http.php?start=" + start + "&limit=" + limit, true);
             ajax.send();
 
             ajax.onreadystatechange = function(){
@@ -152,8 +153,9 @@
 
                     for(let i = 0; i < data.length; i++){
                         html += "<p>";
-                        html += data[i].text
+                        html += data[i].text;
                         html += "</p>";
+                        console.log(data);  
                     }
                    document.getElementById("testloadmore").innerHTML += html;
                    start = start + limit;
