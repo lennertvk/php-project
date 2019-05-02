@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.5
+-- version 4.7.0
 -- https://www.phpmyadmin.net/
 --
--- Host: mysql338.webhosting.be:3306
--- Gegenereerd op: 25 apr 2019 om 11:09
--- Serverversie: 5.7.22-22
--- PHP-versie: 5.6.17-0+deb8u1
+-- Host: localhost:3306
+-- Generation Time: May 02, 2019 at 08:10 AM
+-- Server version: 5.6.34-log
+-- PHP Version: 7.1.5
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -19,13 +19,25 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `ID280780_phpproject`
+-- Database: `php-project`
 --
 
 -- --------------------------------------------------------
 
 --
--- Tabelstructuur voor tabel `images`
+-- Table structure for table `comments`
+--
+
+CREATE TABLE `comments` (
+  `id` int(11) NOT NULL,
+  `text` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id_image` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `images`
 --
 
 CREATE TABLE `images` (
@@ -37,7 +49,7 @@ CREATE TABLE `images` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Gegevens worden geëxporteerd voor tabel `images`
+-- Dumping data for table `images`
 --
 
 INSERT INTO `images` (`id`, `image`, `text`, `minified`, `image_likes`) VALUES
@@ -95,7 +107,7 @@ INSERT INTO `images` (`id`, `image`, `text`, `minified`, `image_likes`) VALUES
 -- --------------------------------------------------------
 
 --
--- Tabelstructuur voor tabel `likes`
+-- Table structure for table `likes`
 --
 
 CREATE TABLE `likes` (
@@ -105,7 +117,7 @@ CREATE TABLE `likes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Gegevens worden geëxporteerd voor tabel `likes`
+-- Dumping data for table `likes`
 --
 
 INSERT INTO `likes` (`id`, `id_image`, `user_id`) VALUES
@@ -119,68 +131,78 @@ INSERT INTO `likes` (`id`, `id_image`, `user_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Tabelstructuur voor tabel `users`
+-- Table structure for table `users`
 --
 
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `email` varchar(255) COLLATE utf8mb4_bin NOT NULL,
   `fullname` varchar(255) COLLATE utf8mb4_bin NOT NULL,
-  `password` varchar(255) COLLATE utf8mb4_bin NOT NULL
+  `password` varchar(255) COLLATE utf8mb4_bin NOT NULL,
+  `image` varchar(255) COLLATE utf8mb4_bin NOT NULL,
+  `bio` varchar(255) COLLATE utf8mb4_bin NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 --
--- Gegevens worden geëxporteerd voor tabel `users`
+-- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `email`, `fullname`, `password`) VALUES
-(12, 'test1', 'test1', '$2y$16$G7qAO2Xy0BoG9oE0xCoVk.oZQ.n3PfAEpjxX1PO45YaoiNBXhdHLC'),
-(13, 'skdjfqmlkjd', 'lennert', '$2y$16$4omT0U37AsEVvGogr6gUIeFpRBzpZPjNV7KOkJiqQVKcctQ6XxxHu');
+INSERT INTO `users` (`id`, `email`, `fullname`, `password`, `image`, `bio`) VALUES
+(12, 'test1', 'test1', '$2y$16$G7qAO2Xy0BoG9oE0xCoVk.oZQ.n3PfAEpjxX1PO45YaoiNBXhdHLC', '', ''),
+(13, 'skdjfqmlkjd@greg.com', 'lennert', '$2y$16$4omT0U37AsEVvGogr6gUIeFpRBzpZPjNV7KOkJiqQVKcctQ6XxxHu', 'images/profile/user_id-1556185527-2019-02-20_11h38_35.png', 'testbio :p');
 
 --
--- Indexen voor geëxporteerde tabellen
+-- Indexes for dumped tables
 --
 
 --
--- Indexen voor tabel `images`
+-- Indexes for table `comments`
+--
+ALTER TABLE `comments`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `images`
 --
 ALTER TABLE `images`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexen voor tabel `likes`
+-- Indexes for table `likes`
 --
 ALTER TABLE `likes`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexen voor tabel `users`
+-- Indexes for table `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT voor geëxporteerde tabellen
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT voor een tabel `images`
+-- AUTO_INCREMENT for table `comments`
+--
+ALTER TABLE `comments`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `images`
 --
 ALTER TABLE `images`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=163;
-
 --
--- AUTO_INCREMENT voor een tabel `likes`
+-- AUTO_INCREMENT for table `likes`
 --
 ALTER TABLE `likes`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
-
 --
--- AUTO_INCREMENT voor een tabel `users`
+-- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
-COMMIT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

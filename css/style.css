@@ -86,7 +86,7 @@ input[type=checkbox] {
     display: grid;
     row-gap: 25px;
 }
-#img_div {
+.img_div {
     margin: auto;  
     border-radius: 5px;
     padding-bottom: 20px;
@@ -94,7 +94,7 @@ input[type=checkbox] {
     overflow: hidden;
     max-width: calc(100% - 10px);
 }
-#img_div img {
+.img_div img {
     margin-bottom: 20px;    
 }
 .beschrijving {
@@ -104,7 +104,7 @@ input[type=checkbox] {
     border-bottom: 1px solid #4CAF50;
     margin: 0px 15px 25px;
 }
-#img_div a {
+.img_div a {
     text-decoration: none;
     background-color: #4CAF50;
     color: white;
@@ -113,7 +113,7 @@ input[type=checkbox] {
     border-radius: 4px;
     cursor: pointer;
 }
-.like {
+.like, .unlike {
     margin: 0px 15px;
 }
 .comment {

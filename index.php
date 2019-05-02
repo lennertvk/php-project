@@ -70,7 +70,7 @@
     foreach($result as $row) {
         echo "<div class='img_div'>";
       	echo "<img src='miniimages/".$row['image']."' >";
-        echo "<p>".$row['text']."</p>";
+        
 
         $statement2 = $conn->prepare("SELECT COUNT(*) FROM likes WHERE user_id = 1 AND id_image =".$row['id']."");
         $result2 = $statement2->execute();  
