@@ -16,18 +16,14 @@
 <body>
 <h2>Resultaten</h2>
 <?php
-    /*if($searchCount > 0){
-        while($searchResult = $searchCount){
-            echo $searchResult;
-        }
-    }
-    else{
-        echo "no results";
-    }*/
-    
     foreach($searchResult as $key):
 ?>
-<li><?php echo $key['text'] ?></li>
+<div>
+<?php 
+    echo "<img src='miniimages/".$key['image']."'width='150px'>";
+?>
+<a href="search.detail.php?search=<?php echo $key['id'];?>"><?php echo $key['text']; ?></a>
+</div>
 <?php endforeach; ?>
 </body>
 </html>
