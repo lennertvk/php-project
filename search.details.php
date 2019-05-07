@@ -6,7 +6,6 @@
  $statement->bindValue(":query",'%'.$query.'%',PDO::PARAM_STR);
  $statement->execute();
  $searchResult = $statement -> fetchAll();
- var_dump($searchResult);
  
 ?>
 <?php foreach ($searchResult as $key): ?>
@@ -15,7 +14,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>ITEM TITEL</title>
+    <title><?php echo $key['text']; ?></title>
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
