@@ -44,7 +44,7 @@ class Post{
     }
     
     public function search(){
-        $query = $_GET['search'];
+        $query = $_GET['Search'];
         $conn = Db::getInstance();
         $statement= $conn->prepare("SELECT * FROM images Where text like :query AND minified = 1");
         $statement->bindValue(":query",'%'.$query.'%',PDO::PARAM_STR);
