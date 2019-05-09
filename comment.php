@@ -1,8 +1,7 @@
-<?php
-    require_once("bootstrap.php");
-
-    //comment class -> getAll
-    $id = $_GET['id']; // komt uit url
+<?php 
+	include_once("bootstrap.php");
+	
+	$id = $_GET['id']; // komt uit url
 
     $conn = Db::getInstance();
     $statement = $conn->prepare("SELECT * FROM images WHERE id = :id");
@@ -10,57 +9,68 @@
     $result = $statement->execute();
     $result = $statement->fetch();
 
-    //comment class -> setComment
-    if(!empty($_POST)){
-        try{
-            $comment = new Comment();
+	//controleer of er een update wordt verzonden
+	if(!empty($_POST))
+	{
+		try {
+			$comment = new Comment();
             $comment->setText($_POST['comment']);
-            $comment->Save();
-        } catch (\Throwable $th) {
-
-        }
-    }
+			$comment->Save();
+		} catch (\Throwable $th) {
+			//throw $th;
+		}
+	}
     $comments = Comment::getAll();
-
+    
+	
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Comment</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>IMDBook</title>
+	<link rel="stylesheet" href="css/style.css">
+	<script type="text/javascript">
+
+	</script>
 </head>
 <body>
-    <div>
-        <?php 
+<div>
+	<div class="errors"></div>
+		<?php 
             echo "<p>". $result['text'] ."</p>";
             echo "<img src='miniimages/".$result['image']."' >";
         ?>
-        <input type="text" placeholder="Leave a comment." id="commment" name="comment"/>
-        <input id="btnSubmit" type="submit" value="Add comment" />
+	
+	<form method="post" action="">
+		
+		<input type="text" placeholder="What's on your mind?" id="comment" name="comment" />
+		<input id="btnSubmit" type="submit" value="Add comment" data-imgid="<?php echo $id ?>" />
+		
+		<ul id="listupdates">
+		<?php 
+			foreach($comments as $c) {
+					echo "<li>". $c->getText() ."</li>";
+			}
+		?>
+		</ul>
+		</div>
+	</form>	
+</div>	
 
-        <ul id="listupdates">
-            <?php
-                foreach($comment as $c) {
-                    echo "<li>" . $c->getText() ."</li>";
-                }
-            ?>
-        </ul>
-    </div>
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
 
-    <script
-    src="https://code.jquery.com/jquery-3.3.1.min.js"
-    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-    crossorigin="anonymous"></script>
-
-    <script>
+<script>
 	$("#btnSubmit").on("click", function(e){
-		var text = $("#comment").val();
+        var text = $("#comment").val();
+        var id = $(this).data("imgid");
 		
 		$.ajax({
 			method: "POST",
 			url: "ajax/postcomment.php",
-			data: { text: text },
+			data: { text: text, id: id },
 			dataType: 'json',
 		})
 		.done(function( res ) {
