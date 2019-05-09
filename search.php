@@ -26,7 +26,7 @@
 <?php 
     echo "<img src='miniimages/".$key['image']."'width='250px'>";
 ?>
-<a href="search.details.php?search=<?php echo $key['id'];?>"><?php echo $key['text']; ?></a>
+<a href="search.details.php?search=<?php echo $key['id'];?>"><?php echo $key['titel']; ?></a>
 </div>
 <?php endforeach; ?>
 </body>
