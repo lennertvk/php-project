@@ -62,9 +62,7 @@
 
     <h1>this is the homepage</h1>
     <h1>like_add veranderen nog niet goed structuur van mapje veranderen!!</h1>
-    <a href="upload.php">upload een foto</a>
-    <br>
-    <a href="edit_profile.php">pas je profiel aan</a>
+    
 <div class="container">
     <?php
     foreach($result as $row) {

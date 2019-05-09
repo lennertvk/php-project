@@ -21,6 +21,8 @@
 <?php 
     echo "<img src='miniimages/".$key['image']."'width='450px'>";
     echo "<br>";
+    echo "<label>gepost op: ".$key['datum']." ".$key['tijd']."</label>";
+    echo "<br>";
     echo $key['text'];
 ?>
 </div>
