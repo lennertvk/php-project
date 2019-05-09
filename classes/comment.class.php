@@ -2,20 +2,21 @@
 class Comment
 {
     private $text;
-    
+    private $imgid;
+
 	public static function getAll(){
-        $id = $_GET['id'];
         $conn = Db::getInstance();
-        $result = $conn->query("select * from comments where id_image = $id order by id asc");
+        $result = $conn->query("select * from comments where id_image = 114 order by id asc");
         
+        // fetch all records from the database and return them as objects of this __CLASS__ (Post)
         return $result->fetchAll(PDO::FETCH_CLASS, __CLASS__);
     }
 
     public function Save(){
-        $id = $_GET['id'];
+        
         $conn = Db::getInstance();
         $statement = $conn->prepare("insert into comments (id_image, text) values (:id_image, :text)");
-        $statement->bindValue(":id_image", $id);
+        $statement->bindValue(":id_image", $this->getImgid());
         $statement->bindValue(":text", $this->getText());
         return $statement->execute();        
     }
@@ -39,6 +40,23 @@ class Comment
 
         return $this;
     }
+    /**
+     * Get the value of imgid
+     */ 
+    public function getImgid()
+    {
+        return $this->imgid;
+    }
 
+    /**
+     * Set the value of imgid
+     *
+     * @return  self
+     */ 
+    public function setImgid($imgid)
+    {
+        $this->imgid = $imgid;
+
+        return $this;
+    }
 }
-?>
