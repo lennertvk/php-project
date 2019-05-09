@@ -44,10 +44,10 @@ function imagecreatefromfile( $filename ) {
   	$targetmini = "miniimages/mini".basename($image);
 
 
-
-		$sql = "INSERT INTO images (image, text) VALUES ('$image', '$desc')";
+		//CURDATE EN CURTIME geven timestamp mee aan de upgeloade foto;
+		$sql = "INSERT INTO images (image, text, datum,tijd) VALUES ('$image', '$desc',CURDATE(), CURTIME())";
 		$imagemininame = "mini" . $_FILES['image']['name']; 
-		$sqlmini = "INSERT INTO images (image, text, minified) VALUES ('$imagemininame', '$desc', '1')";
+		$sqlmini = "INSERT INTO images (image, text, minified, datum,tijd) VALUES ('$imagemininame', '$desc', '1',CURDATE(), CURTIME())";
   	// execute query
   	mysqli_query($conn, $sql);
   	mysqli_query($conn, $sqlmini);
@@ -90,7 +90,12 @@ function imagecreatefromfile( $filename ) {
 ?>
 <!DOCTYPE html>
 <html>
-<head>
+<head><meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Search results</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/style.css">
 <title>Image Upload</title>
 <style type="text/css">
    #content{
