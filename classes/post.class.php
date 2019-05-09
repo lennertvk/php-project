@@ -3,6 +3,7 @@ require_once('bootstrap.php');
 class Post{
     private $img;
     private $searchResult;
+    private $User;
 
     /**
      * Get the value of img
@@ -43,18 +44,31 @@ class Post{
         return $this;
     }
     
-    public function search(){
-        $query = $_GET['Search'];
+    public function search($query){
         $conn = Db::getInstance();
-        $statement= $conn->prepare("SELECT * FROM images Where text like :query AND minified = 1");
+        $statement= $conn->prepare("SELECT * FROM images Where titel like :query AND minified = 1");
         $statement->bindValue(":query",'%'.$query.'%',PDO::PARAM_STR);
         $statement->execute();
         $searchResult = $statement -> fetchAll();
-        //return $searchResult;
-        var_dump( $searchResult);
         return $searchResult;
     }
 
+    /*public function searchUser($query){
+        $conn = Db::getInstance();
+        $statement= $conn->prepare("SELECT * FROM users Where fullname like :query");
+        $statement->bindValue(":query",'%'.$query.'%',PDO::PARAM_STR);
+        $statement->execute();
+        $User = $statement -> fetchAll();
+        return $User;
+    }*/
     
+    public function photoId($query){
+        $conn = Db::getInstance();
+        $statement= $conn->prepare("SELECT * FROM images Where id like :query");
+        $statement->bindValue(":query",'%'.$query.'%',PDO::PARAM_STR);
+        $statement->execute();
+        $photoId = $statement -> fetchAll();
+        return $photoId;
+    }
 }
 ?>

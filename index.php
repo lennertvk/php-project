@@ -55,7 +55,7 @@
   <?php include_once('includes/nav.inc.php')?>
 
   <form action="search.php" method="get" class="search">
-    <input type="text" name="Search" placeholder="Search" />
+    <input type="text" name="search" placeholder="Search" />
     <input type="submit" value="Search" />
   </form>
     

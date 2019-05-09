@@ -269,6 +269,15 @@ class User {
 
                 return $this;
         }
+
+        public function profileId($query){
+                $conn = Db::getInstance();
+                $statement= $conn->prepare("SELECT * FROM users Where id like :query");
+                $statement->bindValue(":query",'%'.$query.'%',PDO::PARAM_STR);
+                $statement->execute();
+                $User = $statement -> fetchAll();
+                return $User;
+        }
     }
 
 ?>

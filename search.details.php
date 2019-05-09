@@ -1,14 +1,10 @@
 <?php
  require_once('bootstrap.php');
  $query = $_GET['search'];
- $conn = Db::getInstance();
- $statement= $conn->prepare("SELECT * FROM images Where id like :query");
- $statement->bindValue(":query",'%'.$query.'%',PDO::PARAM_STR);
- $statement->execute();
- $searchResult = $statement -> fetchAll();
- 
+ $photoId = new Post();
+ $photoId = $photoId->photoId($query);
 ?>
-<?php foreach ($searchResult as $key): ?>
+<?php foreach ($photoId as $key): ?>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -24,7 +20,8 @@
 <div>
 <?php 
     echo "<img src='miniimages/".$key['image']."'width='450px'>";
-   echo $key['text'];
+    echo "<br>";
+    echo $key['text'];
 ?>
 </div>
 </body>
