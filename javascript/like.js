@@ -5,7 +5,7 @@ $(document).ready(function(){
         let postid = $(this).attr('id');
         console.log(postid);
         $.ajax({
-            url: 'test.php',
+            url: 'index.php',
             type: 'post',
             async: 'false',
             data: {
@@ -22,7 +22,7 @@ $(document).ready(function(){
         let postid = $(this).attr('id');
         console.log(postid);
         $.ajax({
-            url: 'test.php',
+            url: 'index.php',
             type: 'post',
             async: 'false',
             data: {
