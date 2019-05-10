@@ -25,7 +25,7 @@ function imagecreatefromfile( $filename ) {
 
 // based on code : https://codewithawa.com/posts/image-upload-using-php-and-mysql-database
 
-  $conn = mysqli_connect("localhost", "root", "", "php-project",0);
+$conn= new PDO("mysql:host=localhost;dbname=php-project;","root","", null);
 
 
   // Initialize message variable
@@ -37,7 +37,7 @@ function imagecreatefromfile( $filename ) {
   	$image = $_FILES['image']['name'];
       
     // Get text
-  	$desc = mysqli_real_escape_string($conn, $_POST['desc']);
+  	$desc = $_POST['desc'];
 
   	// image file directory
   	$target = "images/".basename($image);
@@ -47,10 +47,14 @@ function imagecreatefromfile( $filename ) {
 		//CURDATE EN CURTIME geven timestamp mee aan de upgeloade foto;
 		$sql = "INSERT INTO images (image, text, datum,tijd) VALUES ('$image', '$desc',CURDATE(), CURTIME())";
 		$imagemininame = "mini" . $_FILES['image']['name']; 
-		$sqlmini = "INSERT INTO images (image, text, minified, datum,tijd) VALUES ('$imagemininame', '$desc', '1',CURDATE(), CURTIME())";
-  	// execute query
-  	mysqli_query($conn, $sql);
-  	mysqli_query($conn, $sqlmini);
+		$sqlmini = "INSERT INTO images (image, text, minified) VALUES ('$imagemininame', '$desc', '1')";
+		
+		// execute query
+		$stmt = $conn->prepare($sql);
+		$stmt->execute();
+
+		$stmt = $conn->prepare($sqlmini);
+		$stmt->execute();
 
   	if (move_uploaded_file($_FILES['image']['tmp_name'], $target)) {
   		$msg = "Image uploaded successfully";
@@ -86,7 +90,10 @@ function imagecreatefromfile( $filename ) {
 		}
 	}
 
-  $result = mysqli_query($conn, "SELECT * FROM images");
+	//$result = mysqli_query($conn, "SELECT * FROM images");
+
+	$result = $conn->prepare("SELECT * FROM images");
+  $result = $result->execute();
 ?>
 <!DOCTYPE html>
 <html>

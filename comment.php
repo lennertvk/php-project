@@ -15,14 +15,13 @@
 		try {
 			$comment = new Comment();
             $comment->setText($_POST['comment']);
-			$comment->Save();
-		} catch (\Throwable $th) {
-			//throw $th;
-		}
-	}
-    $comments = Comment::getAll();
-    
-	
+            $comment->Save();
+        } catch (\Throwable $th) {
+
+        }
+    }
+    $comment = Comment::getAll();
+    var_dump($comment); 
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
