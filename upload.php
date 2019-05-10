@@ -49,6 +49,7 @@ $conn= new PDO("mysql:host=localhost;dbname=php-project;","root","", null);
 		$imagemininame = "mini" . $_FILES['image']['name']; 
 		$sqlmini = "INSERT INTO images (image, text, minified) VALUES ('$imagemininame', '$desc', '1')";
 		
+		
 		// execute query
 		$stmt = $conn->prepare($sql);
 		$stmt->execute();
