@@ -123,3 +123,7 @@ input[type=checkbox] {
 .foto{
     max-width: 500px;
 }
+
+.hide{
+    display: none;
+}

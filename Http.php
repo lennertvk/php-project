@@ -1,5 +1,5 @@
 <?php
-
+///// MOET NOG IN HET MAPJE VAN CLASSES
 // inspiration from https://www.youtube.com/watch?v=fteypJId9GA
 
 class Http{
@@ -19,6 +19,14 @@ class Http{
         $result = $statement->fetchAll();
         return $result;
     }
+
+    public function get_all_data(){
+        $conn = new PDO("mysql:host=localhost;dbname=php-project;","root","", null);
+        $statement = $conn->prepare("SELECT * FROM images");
+        $result = $statement->execute();  
+        $result = $statement->fetchAll();
+        return $result;
+    }
 }
 
 if(isset($_GET["start"])){
@@ -29,13 +37,17 @@ if(isset($_GET["start"])){
     $http = new Http();
     $data = $http->get_data($start, $limit);
     $data2 = $http->get_likes();
+    $data3 = $http->get_all_data();
 
     $data = json_encode($data);
     $data2 = json_encode($data2);
+    $data3 = json_encode($data3);
 
     $dataarray = array(
         'dataimage' => "$data",
-        'datalikes' => "$data2");
+        'datalikes' => "$data2",
+        'alldata'   => "$data3"
+    );
 
     echo json_encode($dataarray);
 }

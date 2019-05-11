@@ -8,6 +8,7 @@
   $result = $statement->execute();  
   $result = $statement->fetchAll();
 
+
   if(isset($_POST['liked'])){
     $postid = $_POST['postid'];
     $statement = $conn->prepare("SELECT * FROM images WHERE id = $postid");
@@ -75,6 +76,8 @@
 <script src="javascript/loadmore.js"></script>
 
 <script src="javascript/like.js"></script>
+
+<script src="javascript/inappropriate.js"></script>
 
 <script>
 
