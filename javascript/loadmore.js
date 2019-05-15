@@ -1,5 +1,5 @@
 let start = 0;
-let limit = 1;
+let limit = 20;
 
 function getData(){
     let ajax =  new XMLHttpRequest();

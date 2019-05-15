@@ -1,4 +1,7 @@
 <?php
+
+require_once "classes/location.class.php";
+
 function imagecreatefromfile( $filename ) {
 	if (!file_exists($filename)) {
 			throw new InvalidArgumentException('File "'.$filename.'" not found.');
@@ -45,9 +48,9 @@ $conn= new PDO("mysql:host=localhost;dbname=php-project;","root","", null);
 
 
 		//CURDATE EN CURTIME geven timestamp mee aan de upgeloade foto;
-		$sql = "INSERT INTO images (image, text, datum,tijd) VALUES ('$image', '$desc',CURDATE(), CURTIME())";
+		$sql = "INSERT INTO images (image, text, datum, tijd) VALUES ('$image', '$desc',CURDATE(), CURTIME())";
 		$imagemininame = "mini" . $_FILES['image']['name']; 
-		$sqlmini = "INSERT INTO images (image, text, minified) VALUES ('$imagemininame', '$desc', '1')";
+		$sqlmini = "INSERT INTO images (image, text, minified, datum,tijd) VALUES ('$imagemininame', '$desc', '1', CURDATE(), CURTIME())";
 		
 		
 		// execute query
@@ -94,7 +97,13 @@ $conn= new PDO("mysql:host=localhost;dbname=php-project;","root","", null);
 	//$result = mysqli_query($conn, "SELECT * FROM images");
 
 	$result = $conn->prepare("SELECT * FROM images");
-  $result = $result->execute();
+	$result = $result->execute();
+
+    //$locaiton =  $_POST['location'];
+
+  
+
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -156,10 +165,19 @@ $conn= new PDO("mysql:host=localhost;dbname=php-project;","root","", null);
 				required></textarea>
   	</div>
   	<div>
-  		<button type="submit" name="upload">POST</button>
+  		<button type="submit" name="upload" onclick="getLocation()">POST</button>
   	</div>
   </form>
+	<p id="demo"></p>
+
 	<a href="index.php">back to the homepage</a>
 </div>
+
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+
+<script src="javascript/getlocation.js"></script>
 </body>
 </html>
