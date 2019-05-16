@@ -33,7 +33,8 @@ function imagecreatefromfile( $filename ) {
 
   // Initialize message variable
   $msg = "";
-	
+	$userid = $_SESSION['userid'];
+		var_dump($userid);
   if (isset($_POST['upload'])) {
 		
     // Get image name
@@ -45,7 +46,10 @@ function imagecreatefromfile( $filename ) {
 		$desc = $_POST['desc'];
 		$place = $_POST['location'];
 
+		
+
 		$upload = new Upload();
+		$upload->setUserid($userid);
 		$upload->setTitle($title);
 		$upload->setImage($image);
 		$upload->setDesc($desc);
