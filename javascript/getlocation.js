@@ -12,9 +12,7 @@ let long = position.coords.longitude;
 console.log("lat = " + lat + "   long = " + long);
 
 
-
-//start code from opencage data
-
+///start opencage date code
   var apikey = '33db1f2b28134a28a996889968353b90';
   var latitude = lat;
   var longitude = long;
@@ -28,23 +26,21 @@ console.log("lat = " + lat + "   long = " + long);
     + '&pretty=1'
     + '&no_annotations=1';
 
-  // see full list of required and optional parameters:
-  // https://opencagedata.com/api#forward
 
   var request = new XMLHttpRequest();
   request.open('GET', request_url, true);
 
   request.onload = function() {
-  // see full list of possible response codes:
-  // https://opencagedata.com/api#codes
+
 
     if (request.status == 200){ 
       // Success!
       var data = JSON.parse(request.responseText);
-      console.log(data.results[0].components.city);
-      let city = data.results[0].components.city;
-      doAjaxcall(city);
-
+      console.log(data.results[0].components.city_district);
+      let placeCity = data.results[0].components.city_district;
+      //doAjaxcall(placeCity, latitude, longitude);
+      // zet CIty in text field (hidden)
+      document.getElementById('location').value = placeCity;
     } else if (request.status <= 500){ 
     // We reached our target server, but it returned an error
                            
@@ -63,10 +59,14 @@ console.log("lat = " + lat + "   long = " + long);
 
   request.send();  // make the request
 
-  //END opencagedata
-function doAjaxcall(city){
+// END
+
+}
+/*
+function doAjaxcall(city, lat, long){
   $.ajax({
-    url: 'ajax/location.php',
+    //url: 'ajax/location.php',
+    url: 'upload.php',
     type: 'post',
     async: 'false',
     data: {
@@ -77,7 +77,8 @@ function doAjaxcall(city){
     },
     succes: function(){}
 });
+
 }
-}
+*/
 
 getLocation();
