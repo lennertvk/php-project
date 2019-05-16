@@ -1,6 +1,6 @@
 <?php
-	require_once("bootstrap.php");
-	//require_once("classes/users.class.php");
+	//require_once("bootstrap.php");
+	require_once("classes/users.class.php");
 
 	  if(!empty($_POST)){
         if ($_POST["password"] === $_POST["password_confirmation"]) {
@@ -13,7 +13,9 @@
             $password = $_POST['password'];
             $passwordConfirmation = $_POST['password_confirmation'];
             $fullname = $_POST['fullname'];
-            $result = $user->register();
+			$result = $user->register();
+			
+
          }
          else {
             echo "<p>de wachtwoorden komen niet overeen</p>";

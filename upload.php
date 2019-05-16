@@ -1,6 +1,9 @@
 <?php
+session_start();
 
 require_once "classes/location.class.php";
+require_once "classes/upload.class.php";
+
 
 function imagecreatefromfile( $filename ) {
 	if (!file_exists($filename)) {
@@ -28,37 +31,32 @@ function imagecreatefromfile( $filename ) {
 
 // based on code : https://codewithawa.com/posts/image-upload-using-php-and-mysql-database
 
-$conn= new PDO("mysql:host=localhost;dbname=php-project;","root","", null);
-
-
   // Initialize message variable
   $msg = "";
 	
   if (isset($_POST['upload'])) {
-
+		
     // Get image name
-  	$image = $_FILES['image']['name'];
-      
+		$image = $_FILES['image']['name'];
+		$imagemininame = "mini" . $_FILES['image']['name']; 
+		
     // Get text
-  	$desc = $_POST['desc'];
+		$desc = $_POST['desc'];
+		$place = $_POST['location'];
 
+		$upload = new Upload();
+
+		$upload->setImage($image);
+		$upload->setDesc($desc);
+		$upload->setImagemini($imagemininame);
+		$upload->setLocation($place);
+
+		$resultUploadBig = $upload->uploadBig();
+		$resultUploadSmall = $upload->uploadSmall();
+		
   	// image file directory
   	$target = "images/".basename($image);
   	$targetmini = "miniimages/mini".basename($image);
-
-
-		//CURDATE EN CURTIME geven timestamp mee aan de upgeloade foto;
-		$sql = "INSERT INTO images (image, text, datum, tijd) VALUES ('$image', '$desc',CURDATE(), CURTIME())";
-		$imagemininame = "mini" . $_FILES['image']['name']; 
-		$sqlmini = "INSERT INTO images (image, text, minified, datum,tijd) VALUES ('$imagemininame', '$desc', '1', CURDATE(), CURTIME())";
-		
-		
-		// execute query
-		$stmt = $conn->prepare($sql);
-		$stmt->execute();
-
-		$stmt = $conn->prepare($sqlmini);
-		$stmt->execute();
 
   	if (move_uploaded_file($_FILES['image']['tmp_name'], $target)) {
   		$msg = "Image uploaded successfully";
@@ -93,15 +91,6 @@ $conn= new PDO("mysql:host=localhost;dbname=php-project;","root","", null);
   		$msg = "Failed to upload image";
 		}
 	}
-
-	//$result = mysqli_query($conn, "SELECT * FROM images");
-
-	$result = $conn->prepare("SELECT * FROM images");
-	$result = $result->execute();
-
-    //$locaiton =  $_POST['location'];
-
-  
 
 
 ?>
@@ -165,8 +154,11 @@ $conn= new PDO("mysql:host=localhost;dbname=php-project;","root","", null);
 				required></textarea>
   	</div>
   	<div>
-  		<button type="submit" name="upload" onclick="getLocation()">POST</button>
+  		<button type="submit" name="upload">POST</button>
   	</div>
+		<div class="hide">
+	 		<input type="text" name="location" id="location">
+		</div>
   </form>
 	<p id="demo"></p>
 

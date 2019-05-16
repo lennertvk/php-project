@@ -17,8 +17,9 @@ function getData(){
             let html = "";
 
             for(let i = 0; i < data.length; i++){
-          //console.log(data[i].display);
+            console.log(data[i].place);
             let likeorunlike = "";
+            
             let action = "something";
             if(typeof(datalikes[i]) !== 'undefined'){
                 if(datalikes[i].user_id == 1){  
@@ -39,6 +40,7 @@ function getData(){
                 html += "<img src='miniimages/"+ data[i].image +"'>";
                 html += "<p>"+data[i].text+"</p>";
                 html += "<p><span id='"+ data[i].id +"id'>" + data[i].image_likes + "</span> Likes</p>";
+                html += "<span class='place'>Place: "+ data[i].place +"</span>";
                 html += "<span id='"+likeorunlike+"'><button = '' class='"+ likeorunlike +"' id= '" + data[i].id + "'"+action+">"+likeorunlike+"</button</span>"
                 html += "</div>";
                 html += "<br>";

@@ -20,8 +20,8 @@
 
         }
     }
-    $comment = Comment::getAll();
-    var_dump($comment); 
+    //$comment = Comment::getAll();
+    $comment->getComments(); 
 ?><!DOCTYPE html>
 <html lang="en">
 <head>

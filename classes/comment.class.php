@@ -11,6 +11,14 @@ class Comment
         // fetch all records from the database and return them as objects of this __CLASS__ (Post)
         return $result->fetchAll(PDO::FETCH_CLASS, __CLASS__);
     }
+    public function getComments(){
+        $conn = Db::getInstance();
+        $statement = $conn->prepare("select * from comments where id_image = :id_image order by id asc");
+        $statement->bindValue(":id_image", $this->getImgid());
+        $statement->execute();
+        $result = $statement->fetch();
+        return $result;
+    }
 
     public function Save(){
         
