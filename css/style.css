@@ -131,3 +131,58 @@ input[type=checkbox] {
 .place{
     float: right;
 }
+.uploadtext{
+    border: 1px solid green;
+}
+#content{
+    width: 100%;
+    width: 50%;
+    margin: 20px auto;
+     border: 1px solid #fff;
+     display: block;
+     text-align: center;
+    border: 1px solid #cbcbcb;
+}
+form{
+    width: 100%;
+     margin: 20px auto;
+     display: inline-block;
+    width: 50%;
+    margin: 20px auto;
+}
+form div{
+    margin-top: 5px;
+@ -119,35 +141,9 @@ $conn = Db::getInstance();
+img{
+    float: left;
+    margin: 5px;
+    width: 100%;
+    width: 300px;
+    height: 140px;
+  }
+  textarea{
+      border: 1px solid #4CAF50;
+      border-radius: 10px;
+      outline: none;
+      width: 95%;
+     font-size: 16px;
+  }
+  .button{
+      width: 170px;
+      height: 40px;
+      background-color: #fff;
+      border: 3px solid #4CAF50;
+      border-radius: 40px;
+      font-size: 20px;
+      color: #4CAF50;
+  }
+  .cancel{
+      color: red;
+      text-decoration: none;
+  }
+  .title{
+      width: 95%;
+      border: 1px solid #4CAF50;
+      font-size: 23px;
+      margin-top: 5px;
+  }
