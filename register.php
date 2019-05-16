@@ -1,6 +1,6 @@
 <?php
-	
-	require_once("classes/users.class.php");
+	require_once("bootstrap.php");
+	//require_once("classes/users.class.php");
 
 	  if(!empty($_POST)){
         if ($_POST["password"] === $_POST["password_confirmation"]) {
