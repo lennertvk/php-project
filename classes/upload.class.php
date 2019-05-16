@@ -3,10 +3,31 @@
 require_once('bootstrap.php');
 
     class Upload{
+        private $title;
         private $image;
         private $desc;
         private $imagemini;
         private $location;
+
+/**
+         * Get the value of image
+         */ 
+        public function getTitle()
+        {
+                return $this->title;
+        }
+
+        /**
+         * Set the value of image
+         *
+         * @return  self
+         */ 
+        public function setTitle($title)
+        {
+                $this->title = $title;
+
+                return $this;
+        }
 
         /**
          * Get the value of image
@@ -90,8 +111,9 @@ require_once('bootstrap.php');
 
         public function uploadBig(){
             $conn = Db::getInstance();
-            $statement = $conn->prepare("INSERT INTO images (image, text, datum, tijd, place) VALUES (:image, :desc, CURDATE(), CURTIME(), :place)");
+            $statement = $conn->prepare("INSERT INTO images (image, text, datum, tijd, place, titel) VALUES (:image, :desc, CURDATE(), CURTIME(), :place), :title");
             $statement->bindParam(":image", $this->image);
+            $statement->bindParam(":title", $this->title);
             $statement->bindParam(":desc", $this->desc);
             $statement->bindParam(":place", $this->location);
 
@@ -101,9 +123,10 @@ require_once('bootstrap.php');
 
         public function uploadSmall(){
             $conn = Db::getInstance();
-            $statement = $conn->prepare("INSERT INTO images (image, text, minified, datum, tijd, place) VALUES (:imagemini, :desc, '1', CURDATE(), CURTIME(), :place)");
+            $statement = $conn->prepare("INSERT INTO images (image, text, minified, datum, tijd, place,titel) VALUES (:imagemini, :desc, '1', CURDATE(), CURTIME(), :place), :title");
             $statement->bindParam(":imagemini", $this->imagemini);
             $statement->bindParam(":desc", $this->desc);
+            $statement->bindParam(":title", $this->title);
             $statement->bindParam(":place", $this->location);
 
             $result = $statement->execute();

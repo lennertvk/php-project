@@ -40,12 +40,13 @@ function imagecreatefromfile( $filename ) {
 		$image = $_FILES['image']['name'];
 		$imagemininame = "mini" . $_FILES['image']['name']; 
 		
-    // Get text
+		// Get text
+		$title = $_POST['title'];
 		$desc = $_POST['desc'];
 		$place = $_POST['location'];
 
 		$upload = new Upload();
-
+		$upload->setTitle($title);
 		$upload->setImage($image);
 		$upload->setDesc($desc);
 		$upload->setImagemini($imagemininame);
@@ -105,33 +106,57 @@ function imagecreatefromfile( $filename ) {
 <title>Image Upload</title>
 <style type="text/css">
    #content{
+   	width: 100%;
    	width: 50%;
    	margin: 20px auto;
+		border: 1px solid #fff;
+		display: block;
+		text-align: center;
    	border: 1px solid #cbcbcb;
    }
    form{
+   	width: 100%;
+		margin: 20px auto;
+		display: inline-block;
    	width: 50%;
    	margin: 20px auto;
    }
    form div{
    	margin-top: 5px;
-   }
-   #img_div{
-   	width: 80%;
-   	padding: 5px;
-   	margin: 15px auto;
-   	border: 1px solid #cbcbcb;
-   }
-   #img_div:after{
-   	content: "";
-   	display: block;
-   	clear: both;
-   }
+@ -119,35 +141,9 @@ $conn = Db::getInstance();
    img{
    	float: left;
    	margin: 5px;
+   	width: 100%;
    	width: 300px;
    	height: 140px;
+	 }
+	 textarea{
+		 border: 1px solid #4CAF50;
+		 border-radius: 10px;
+		 outline: none;
+		 width: 95%;
+		font-size: 16px;
+	 }
+	 button{
+		 width: 170px;
+		 height: 40px;
+		 background-color: #fff;
+		 border: 3px solid #4CAF50;
+		 border-radius: 40px;
+		 font-size: 20px;
+		 color: #4CAF50;
+	 }
+	 #cancel{
+		 color: red;
+		 text-decoration: none;
+	 }
+	 #title{
+		 width: 95%;
+		 border: 1px solid #4CAF50;
+		 font-size: 23px;
+		 margin-top: 5px;
+	 }
    }
 </style>
 </head>
@@ -143,7 +168,11 @@ function imagecreatefromfile( $filename ) {
   	<input type="hidden" name="size" value="1000000">
   	<div>
   	  <input type="file" name="image" required>
-  	</div>
+		</div>
+		</div>
+		<div>
+		<input id="title"  type="text" name="title" placeholder= "A good title..."required>
+		</div>
   	<div>
       <textarea 
       	id="text" 
@@ -162,7 +191,7 @@ function imagecreatefromfile( $filename ) {
   </form>
 	<p id="demo"></p>
 
-	<a href="index.php">back to the homepage</a>
+	<a href="index.php" id="cancel">back to the homepage</a>
 </div>
 
 <script
