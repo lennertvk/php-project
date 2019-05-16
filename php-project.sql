@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Gegenereerd op: 11 mei 2019 om 12:40
+-- Gegenereerd op: 16 mei 2019 om 11:30
 -- Serverversie: 10.1.38-MariaDB
 -- PHP-versie: 7.3.2
 
@@ -51,16 +51,21 @@ CREATE TABLE `images` (
   `userid` int(11) NOT NULL,
   `datum` date NOT NULL,
   `tijd` time NOT NULL,
-  `display` int(1) NOT NULL DEFAULT '1'
+  `display` int(1) NOT NULL DEFAULT '1',
+  `place` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Gegevens worden geëxporteerd voor tabel `images`
 --
 
-INSERT INTO `images` (`id`, `image`, `text`, `minified`, `image_likes`, `reported`, `titel`, `userid`, `datum`, `tijd`, `display`) VALUES
-(167, '2019-01-28_14h12_24.png', 'this is my first image', NULL, 0, 0, '', 0, '2019-05-11', '11:56:54', 1),
-(168, 'mini2019-01-28_14h12_24.png', 'this is my first image', 1, 0, 0, '', 0, '0000-00-00', '00:00:00', 1);
+INSERT INTO `images` (`id`, `image`, `text`, `minified`, `image_likes`, `reported`, `titel`, `userid`, `datum`, `tijd`, `display`, `place`) VALUES
+(434, 'DD_keto-meals_feat.jpg', 'test1', NULL, 0, 0, '', 0, '2019-05-16', '10:23:38', 1, 'Mechelen'),
+(435, 'miniDD_keto-meals_feat.jpg', 'test1', 1, 0, 0, '', 0, '2019-05-16', '10:23:38', 1, 'Mechelen'),
+(436, 'veganpowerbowls-2157-5-683x1024.jpg', 'test2', NULL, 0, 0, '', 0, '2019-05-16', '10:23:44', 1, 'Mechelen'),
+(437, 'miniveganpowerbowls-2157-5-683x1024.jpg', 'test2', 1, 0, 0, '', 0, '2019-05-16', '10:23:44', 1, 'Mechelen'),
+(438, '5783153.jpg', 'test3', NULL, 0, 0, '', 0, '2019-05-16', '10:23:50', 1, 'Mechelen'),
+(439, 'mini5783153.jpg', 'test3', 1, 0, 0, '', 0, '2019-05-16', '10:23:50', 1, 'Mechelen');
 
 -- --------------------------------------------------------
 
@@ -74,13 +79,19 @@ CREATE TABLE `likes` (
   `user_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+-- --------------------------------------------------------
+
 --
--- Gegevens worden geëxporteerd voor tabel `likes`
+-- Tabelstructuur voor tabel `test`
 --
 
-INSERT INTO `likes` (`id`, `id_image`, `user_id`) VALUES
-(13, 168, 1),
-(14, 168, 1);
+CREATE TABLE `test` (
+  `id` int(11) NOT NULL,
+  `latitude` varchar(255) COLLATE utf8mb4_bin NOT NULL,
+  `longitude` varchar(255) COLLATE utf8mb4_bin NOT NULL,
+  `city` varchar(255) COLLATE utf8mb4_bin NOT NULL,
+  `image_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 -- --------------------------------------------------------
 
@@ -104,7 +115,13 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `email`, `fullname`, `password`, `bio`, `image`) VALUES
 (12, 'test1', 'test1', '$2y$16$G7qAO2Xy0BoG9oE0xCoVk.oZQ.n3PfAEpjxX1PO45YaoiNBXhdHLC', '', ''),
 (13, 'len.nert@hotmail.com', 'lennert', '$2y$16$4omT0U37AsEVvGogr6gUIeFpRBzpZPjNV7KOkJiqQVKcctQ6XxxHu', 'mijn naam is lennert', 'images/profile/user_id-1557389304-Tekengebied1.png'),
-(14, 'tom.testeron@hotmail.com', 'tom', '$2y$16$uM5zMgs3v4SPDnIFqKTGmek61xV9AToL0dlHS10sOrVf.FFJI8ZC.', 'Hallooo', 'images/profile/user_id-1557390028-user_id-1556185527-2019-02-20_11h38_35.png');
+(14, 'tom.testeron@hotmail.com', 'tom', '$2y$16$uM5zMgs3v4SPDnIFqKTGmek61xV9AToL0dlHS10sOrVf.FFJI8ZC.', 'Hallooo', 'images/profile/user_id-1557390028-user_id-1556185527-2019-02-20_11h38_35.png'),
+(15, 'lennert.van.kerckhove@gmail.com', 'lennert van kerckhove', '$2y$16$HdXVs2M39ogmt.T0.QNMd.oFfyRNyRjyeu1//TAyIPi8XEhAZz7EO', '', ''),
+(16, 'test@test.com', 'session test', '$2y$16$wWBz1yCPc5UrPAUFORUmV.PToDARdoTM1DTPbpVt7/qT5NBmMyE9S', '', ''),
+(17, 'test@test.com', 'test 23', '$2y$16$8OCTQS6Gx09iDaKsVs4hsuMdud/TeTiyIEDeTuAbxJ0LCvieyE.xS', '', ''),
+(18, 'test@test.com', 'test4', '$2y$16$rOkz5C0ZowXi934cIRNyAOD0a7hLu4E4T7SFWY.evjUiYldZPIkmi', '', ''),
+(19, 'fjklqsdj@test1116.ocm', 'lennert van kerckhove', '$2y$16$Nsu8mQshHf/i8ePcqT1x3uRReLMRY3uOxzn22m1vYCHDPIlUbK3tW', '', ''),
+(20, 'test@test.com', 'test session 3', '$2y$16$0ajH8i8yGJYZYcR5lLiyo.pVJYpYYbn5jXC.fDXhslb76SwMfLKTa', '', '');
 
 --
 -- Indexen voor geëxporteerde tabellen
@@ -124,6 +141,12 @@ ALTER TABLE `likes`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexen voor tabel `test`
+--
+ALTER TABLE `test`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexen voor tabel `users`
 --
 ALTER TABLE `users`
@@ -138,19 +161,25 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT voor een tabel `images`
 --
 ALTER TABLE `images`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=169;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=440;
 
 --
 -- AUTO_INCREMENT voor een tabel `likes`
 --
 ALTER TABLE `likes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT voor een tabel `test`
+--
+ALTER TABLE `test`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=106;
 
 --
 -- AUTO_INCREMENT voor een tabel `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

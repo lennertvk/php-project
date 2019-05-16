@@ -1,9 +1,13 @@
 <?php
-  require_once('bootstrap.php');
+require_once('bootstrap.php');
  // require_once('like.php');
+require_once 'classes/Checksession.class.php';
+  session_start();
+  $sessionemail = $_SESSION["email"];
+  $checkSession = new CheckingSession();
+  $isSession = $checkSession->checkSession($sessionemail);
 
- session_start();
-  var_dump($_SESSION["email"]);
+  var_dump($sessionemail);
 
   $conn = Db::getInstance();
   //$conn= new PDO("mysql:host=localhost;dbname=php-project;","root","root", null);

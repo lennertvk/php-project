@@ -127,7 +127,10 @@
 
                 $result = $statement->execute();
                 if($result === true){
-                    header("Location: index.php");
+                session_start();
+                $_SESSION["email"] = $this->email;
+                
+                header("Location: index.php");
                 }
                 return $result; 
                 
