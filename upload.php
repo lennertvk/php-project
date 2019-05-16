@@ -1,6 +1,6 @@
 <?php
-
-require_once "classes/location.class.php";
+require_once('bootstrap.php');
+//require_once "classes/location.class.php";
 
 function imagecreatefromfile( $filename ) {
 	if (!file_exists($filename)) {
@@ -28,8 +28,8 @@ function imagecreatefromfile( $filename ) {
 
 // based on code : https://codewithawa.com/posts/image-upload-using-php-and-mysql-database
 
-$conn= new PDO("mysql:host=localhost;dbname=php-project;","root","", null);
-
+//$conn= new PDO("mysql:host=localhost;dbname=php-project;","root","", null);
+$conn = Db::getInstance();
 
   // Initialize message variable
   $msg = "";
@@ -37,7 +37,10 @@ $conn= new PDO("mysql:host=localhost;dbname=php-project;","root","", null);
   if (isset($_POST['upload'])) {
 
     // Get image name
-  	$image = $_FILES['image']['name'];
+		$image = $_FILES['image']['name'];
+		
+		// Get title
+		$title = $_POST['title']; 
       
     // Get text
   	$desc = $_POST['desc'];
@@ -46,48 +49,20 @@ $conn= new PDO("mysql:host=localhost;dbname=php-project;","root","", null);
   	$target = "images/".basename($image);
   	$targetmini = "miniimages/mini".basename($image);
 
-
 		//CURDATE EN CURTIME geven timestamp mee aan de upgeloade foto;
-		$sql = "INSERT INTO images (image, text, datum, tijd) VALUES ('$image', '$desc',CURDATE(), CURTIME())";
-		$imagemininame = "mini" . $_FILES['image']['name']; 
-		$sqlmini = "INSERT INTO images (image, text, minified, datum,tijd) VALUES ('$imagemininame', '$desc', '1', CURDATE(), CURTIME())";
+		$sql = "INSERT INTO images (image, text, datum, tijd, titel) VALUES ('$image', '$desc',CURDATE(), CURTIME(), '$title')";
+		//$imagemininame = "mini" . $_FILES['image']['name']; 
+		//$sqlmini = "INSERT INTO images (image, text, minified, datum,tijd) VALUES ('$imagemininame', '$desc', '1', CURDATE(), CURTIME())";
 		
 		
 		// execute query
 		$stmt = $conn->prepare($sql);
 		$stmt->execute();
 
-		$stmt = $conn->prepare($sqlmini);
-		$stmt->execute();
+	//	$stmt = $conn->prepare($sqlmini);
+		//$stmt->execute();
 
   	if (move_uploaded_file($_FILES['image']['tmp_name'], $target)) {
-  		$msg = "Image uploaded successfully";
-  	}else{
-  		$msg = "Failed to upload image";
-		}
-
-		//change image size -> komt van youtube video hoofdzakelijk
-		
-		$width = 600;
-		$height = 600;
-
-		list($width_orig, $height_orig) = getimagesize($target);
-
-		$ratio_orig = $width_orig/$height_orig;
-
-		if ($width/$height > $ratio_orig) {
-			$width = $height*$ratio_orig;
-	 } else {
-			$height = $width/$ratio_orig;
-	 }
-
-	 	$image_p = imagecreatetruecolor($width, $height);
-		$imagem = imagecreatefromfile($target);
-		$miniimage = imagecopyresampled($image_p, $imagem, 0, 0, 0, 0, $width, $height, $width_orig, $height_orig);
-
-		imagepng($image_p, $targetmini);
-
-		if (move_uploaded_file($_FILES['image']['tmp_name'], $targetmini)) {
   		$msg = "Image uploaded successfully";
   	}else{
   		$msg = "Failed to upload image";
@@ -116,13 +91,16 @@ $conn= new PDO("mysql:host=localhost;dbname=php-project;","root","", null);
 <title>Image Upload</title>
 <style type="text/css">
    #content{
-   	width: 50%;
+   	width: 100%;
    	margin: 20px auto;
-   	border: 1px solid #cbcbcb;
+		border: 1px solid #fff;
+		display: block;
+		text-align: center;
    }
    form{
-   	width: 50%;
-   	margin: 20px auto;
+   	width: 100%;
+		margin: 20px auto;
+		display: inline-block;
    }
    form div{
    	margin-top: 5px;
@@ -141,9 +119,35 @@ $conn= new PDO("mysql:host=localhost;dbname=php-project;","root","", null);
    img{
    	float: left;
    	margin: 5px;
-   	width: 300px;
+   	width: 100%;
    	height: 140px;
-   }
+	 }
+	 textarea{
+		 border: 1px solid #4CAF50;
+		 border-radius: 10px;
+		 outline: none;
+		 width: 95%;
+		font-size: 16px;
+	 }
+	 button{
+		 width: 170px;
+		 height: 40px;
+		 background-color: #fff;
+		 border: 3px solid #4CAF50;
+		 border-radius: 40px;
+		 font-size: 20px;
+		 color: #4CAF50;
+	 }
+	 #cancel{
+		 color: red;
+		 text-decoration: none;
+	 }
+	 #title{
+		 width: 95%;
+		 border: 1px solid #4CAF50;
+		 font-size: 23px;
+		 margin-top: 5px;
+	 }
 </style>
 </head>
 <body>
@@ -154,7 +158,10 @@ $conn= new PDO("mysql:host=localhost;dbname=php-project;","root","", null);
   	<input type="hidden" name="size" value="1000000">
   	<div>
   	  <input type="file" name="image" required>
-  	</div>
+		</div>
+		<div>
+		<input id="title"  type="text" name="title" placeholder= "A good title..."required>
+		</div>
   	<div>
       <textarea 
       	id="text" 
@@ -170,7 +177,7 @@ $conn= new PDO("mysql:host=localhost;dbname=php-project;","root","", null);
   </form>
 	<p id="demo"></p>
 
-	<a href="index.php">back to the homepage</a>
+	<a href="index.php" id="cancel">cancel upload</a>
 </div>
 
 <script

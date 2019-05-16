@@ -97,8 +97,8 @@
             $password = password_hash($this->password, PASSWORD_DEFAULT, $options); 
             
 			try{
-                $conn = Db::getInstance();
-                //$conn= new PDO("mysql:host=localhost;dbname=php-project;","root","", null);
+                //$conn = Db::getInstance();
+                $conn= new PDO("mysql:host=localhost;dbname=php-project;","root","", null);
 				$statement = $conn->prepare("INSERT INTO users (email, password, fullname) VALUES(:email, :password, :fullname)");
 				$statement->bindParam(":email", $this->email);
 				$statement->bindParam(":password", $password); 
@@ -120,8 +120,8 @@
         public function login(){
         
             try{
-                $conn = Db::getInstance();
-                //$conn= new PDO("mysql:host=localhost;dbname=php-project;","root","", null);
+                //$conn = Db::getInstance();
+                $conn= new PDO("mysql:host=localhost;dbname=php-project;","root","", null);
                 $statement = $conn->prepare("select * from users where email = :email");
                 
                 //parameter binden
