@@ -97,8 +97,8 @@
             $password = password_hash($this->password, PASSWORD_DEFAULT, $options); 
             
 			try{
-                $conn = Db::getInstance();
-                //$conn= new PDO("mysql:host=localhost;dbname=php-project;","root","", null);
+                //$conn = Db::getInstance();
+                $conn= new PDO("mysql:host=localhost;dbname=php-project;","root","", null);
 				$statement = $conn->prepare("INSERT INTO users (email, password, fullname) VALUES(:email, :password, :fullname)");
 				$statement->bindParam(":email", $this->email);
 				$statement->bindParam(":password", $password); 
@@ -106,6 +106,8 @@
 
                 $result = $statement->execute();
                 if($result === true){
+                    session_start();
+			        $_SESSION["email"] = $this->email;
                     header("Location: index.php");
                 }
                 return $result; 

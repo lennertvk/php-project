@@ -1,5 +1,4 @@
 <?php
-    
     require_once("classes/users.class.php");
 
     if(!empty($_POST['Email']) && !empty($_POST['Password'])){

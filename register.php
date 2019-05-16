@@ -13,7 +13,9 @@
             $password = $_POST['password'];
             $passwordConfirmation = $_POST['password_confirmation'];
             $fullname = $_POST['fullname'];
-            $result = $user->register();
+			$result = $user->register();
+			
+
          }
          else {
             echo "<p>de wachtwoorden komen niet overeen</p>";

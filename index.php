@@ -2,6 +2,9 @@
   require_once('bootstrap.php');
  // require_once('like.php');
 
+ session_start();
+  var_dump($_SESSION["email"]);
+
   $conn = Db::getInstance();
   //$conn= new PDO("mysql:host=localhost;dbname=php-project;","root","root", null);
   $statement = $conn->prepare("SELECT * FROM images WHERE minified = 1");
