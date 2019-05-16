@@ -1,20 +1,48 @@
 <?php
 
-class User {
-        
-        private $fullname;
+//methode dat de klasse user is bv. zodat login en register niet dezelfde code hebben staan
+
+    class User{
         private $email;
+        private $fullname;
+        private $password;
+        private $passwordconfirmation;
+
+
         private $bio;
         private $image;
-        private $password;
         private $user_id;
-
         //TEMP FILES FOR IMAGE UPLOAD
         private $ImageName;
         private $ImageSize;
         private $ImageTmpName;
 
-       
+
+        /**
+         * Get the value of email
+         */ 
+        public function getEmail()
+        {
+                return $this->email;
+        }
+
+        /**
+         * Set the value of email
+         *
+         * @return  self
+         */ 
+        public function setEmail($email)
+        {
+                if (empty($email)) {
+                    throw new Exception("Email cannot be empty");
+                }
+                else {
+                $this->email = htmlspecialchars($email);
+
+                return $this;
+                }
+        }
+
         /**
          * Get the value of fullname
          */ 
@@ -30,7 +58,7 @@ class User {
          */ 
         public function setFullname($fullname)
         {
-                if (empty($fullname)) {
+            if (empty($fullname)) {
                 throw new Exception("fullname cannot be empty");
                 }
                 else {
@@ -55,97 +83,96 @@ class User {
         public function setPassword($password)
         {
                 $options = [
-                        'cost' => 16, 
+                    'cost' => 16, 
                 ];
                 $this->password = password_hash($this->password, PASSWORD_DEFAULT, $options);
-                
+            
                 return $this;
         }
 
         /**
-         * Get the value of user_id
+         * Get the value of passwordconfirmation
          */ 
-        public function getUser_id()
+        public function getPasswordconfirmation()
         {
-                return $this->user_id;
+                return $this->passwordconfirmation;
         }
 
         /**
-         * Set the value of user_id
+         * Set the value of passwordconfirmation
          *
          * @return  self
          */ 
-        public function setUser_id($user_id)
+        public function setPasswordconfirmation($passwordconfirmation)
         {
-                $this->user_id = htmlspecialchars($user_id);
+                $this->passwordconfirmation = $passwordconfirmation;
+
                 return $this;
+        }
+
+        public function register(){            
+            $options = [
+                'cost' => 16, 
+            ];
+
+            $password = password_hash($this->password, PASSWORD_DEFAULT, $options); 
+            
+			try{
+                $conn = Db::getInstance();
+                //$conn= new PDO("mysql:host=localhost;dbname=php-project;","root","", null);
+				$statement = $conn->prepare("INSERT INTO users (email, password, fullname) VALUES(:email, :password, :fullname)");
+				$statement->bindParam(":email", $this->email);
+				$statement->bindParam(":password", $password); 
+                $statement->bindParam(":fullname", $this->fullname);
+
+                $result = $statement->execute();
+                if($result === true){
+                    header("Location: index.php");
+                }
+                return $result; 
+                
+			}catch (Throwable $t){
+
+                return false;
+
+			}
         }
         
-        public function getUserInfo() {
-                //DB CONNECTIE
+        public function login(){
+        
+            try{
                 $conn = Db::getInstance();
                 //$conn= new PDO("mysql:host=localhost;dbname=php-project;","root","", null);
-
-                //QUERY WHERE USER = $_SESSION
-                $statement = $conn->prepare("SELECT * FROM users WHERE id = :user_id LIMIT 1");
-                $statement->bindParam(":user_id", $this->user_id);
-                $statement->execute();
-                $result = $statement->fetch();
-                return $result;
-        }
-
-        public function update() {
-                //DB CONNECTIE
-                $conn = Db::getInstance();
-                //$conn= new PDO("mysql:host=localhost;dbname=php-project;","root","", null);
-
-                //QUERY UPDATE
-                $statement = $conn->prepare("UPDATE users SET fullname=:fullname,email=:email,bio=:bio,image=:image WHERE id = :user_id");
-                $statement->bindParam(":user_id", $this->user_id);
-                $statement->bindParam(":fullname", $this->fullname);
-                $statement->bindParam(":email", $this->email);
-                $statement->bindParam(":bio", $this->bio);
-                $statement->bindParam(":image", $this->image);
-                $statement->execute();
-                return $statement;
-        }
-
-        public function updatePassword() {
-                $conn = Db::getInstance();
-                //$conn= new PDO("mysql:host=localhost;dbname=php-project;","root","", null);
-                $statement = $conn->prepare("UPDATE users SET password = :password WHERE id = :user_id");
-                $statement->bindParam(":user_id", $this->user_id);
-                $statement->bindParam(":password", $this->password);
-                $statement->execute();
-                return $statement;    
-        }
-
-        /**
-         * Get the value of email
-         */ 
-        public function getEmail()
-        {
-                return $this->email;
-        }
-
-        /**
-         * Set the value of email
-         *
-         * @return  self
-         */ 
-        public function setEmail($email)
-        {
-                if (empty($email)) {
-                        throw new Exception("Email cannot be empty");
+                $statement = $conn->prepare("select * from users where email = :email");
+                
+                //parameter binden
+                $statement->bindParam(":email",$this->email);
+                $result = $statement->execute();
+                
+                //array overzetten naar variable
+                $user = $statement->fetch(PDO::FETCH_ASSOC);
+                
+                if (password_verify($this->password, $user['password'])) {
+                    //echo 'Password is valid!';
+                    session_start();
+                    header('Location: index.php');
+                    return true;
                 }
-                else {
-                $this->email = htmlspecialchars($email);
-
-                return $this;
+                 else {
+                     echo 'Password is invalid!';
+                    //display error message
+                    return false;
+            
                 }
+            }
+            catch (Throwable $t){
+                echo "<h1>ER LIEP IETS MIS</h1>";
+            }
         }
 
-        /**
+        /*-- update functions --*/
+
+         /**
          * Get the value of bio
          */ 
         public function getBio()
@@ -184,32 +211,6 @@ class User {
 
                 return $this;
         }
-
-        //save profile image into folder profile
-        public function SaveProfileImg() {
-                $file_name = "user_id" . "-" . time() . "-" . $this->ImageName;
-                $file_size = $this->ImageSize;
-                $file_tmp = $this->ImageTmpName;
-                $tmp = explode('.', $file_name);
-                $file_ext = end($tmp);
-                $expensions = array("jpeg", "jpg", "png", "gif");
-        
-                if (in_array($file_ext, $expensions) === false) {
-                        throw new Exception("extension not allowed, please choose a JPEG or PNG or GIF file.");
-                }
-        
-                if ($file_size > 2097152) {
-                        throw new Exception('File size must be smaller than 2 MB');
-                }
-        
-                if (empty($errors) == true) {
-                        move_uploaded_file($file_tmp, "images/profile/" . $file_name);
-                        return "images/profile/" . $file_name;
-                } else {
-                        echo "Error";
-                }
-    }
-
         /**
          * Get the value of ImageName
          */ 
@@ -269,6 +270,89 @@ class User {
 
                 return $this;
         }
+        /**
+         * Get the value of user_id
+         */ 
+        public function getUser_id()
+        {
+                return $this->user_id;
+        }
+
+        /**
+         * Set the value of user_id
+         *
+         * @return  self
+         */ 
+        public function setUser_id($user_id)
+        {
+                $this->user_id = htmlspecialchars($user_id);
+                return $this;
+        }
+        
+        public function getUserInfo() {
+                //DB CONNECTIE
+                $conn = Db::getInstance();
+                //$conn= new PDO("mysql:host=localhost;dbname=php-project;","root","", null);
+
+                //QUERY WHERE USER = $_SESSION
+                $statement = $conn->prepare("SELECT * FROM users WHERE id = :user_id LIMIT 1");
+                $statement->bindParam(":user_id", $this->user_id);
+                $statement->execute();
+                $result = $statement->fetch();
+                return $result;
+        }
+
+        public function update() {
+                //DB CONNECTIE
+                $conn = Db::getInstance();
+                //$conn= new PDO("mysql:host=localhost;dbname=php-project;","root","", null);
+
+                //QUERY UPDATE
+                $statement = $conn->prepare("UPDATE users SET fullname=:fullname,email=:email,bio=:bio,image=:image WHERE id = :user_id");
+                $statement->bindParam(":user_id", $this->user_id);
+                $statement->bindParam(":fullname", $this->fullname);
+                $statement->bindParam(":email", $this->email);
+                $statement->bindParam(":bio", $this->bio);
+                $statement->bindParam(":image", $this->image);
+                $statement->execute();
+                return $statement;
+        }
+
+        public function updatePassword() {
+                $conn = Db::getInstance();
+                //$conn= new PDO("mysql:host=localhost;dbname=php-project;","root","", null);
+                $statement = $conn->prepare("UPDATE users SET password = :password WHERE id = :user_id");
+                $statement->bindParam(":user_id", $this->user_id);
+                $statement->bindParam(":password", $this->password);
+                $statement->execute();
+                return $statement;    
+        }
+
+
+        //save profile image into folder profile
+        public function SaveProfileImg() {
+                $file_name = "user_id" . "-" . time() . "-" . $this->ImageName;
+                $file_size = $this->ImageSize;
+                $file_tmp = $this->ImageTmpName;
+                $tmp = explode('.', $file_name);
+                $file_ext = end($tmp);
+                $expensions = array("jpeg", "jpg", "png", "gif");
+        
+                if (in_array($file_ext, $expensions) === false) {
+                        throw new Exception("extension not allowed, please choose a JPEG or PNG or GIF file.");
+                }
+        
+                if ($file_size > 2097152) {
+                        throw new Exception('File size must be smaller than 2 MB');
+                }
+        
+                if (empty($errors) == true) {
+                        move_uploaded_file($file_tmp, "images/profile/" . $file_name);
+                        return "images/profile/" . $file_name;
+                } else {
+                        echo "Error";
+                }
+        }
 
         public function profileId($query){
                 $conn = Db::getInstance();
@@ -278,6 +362,5 @@ class User {
                 $User = $statement -> fetchAll();
                 return $User;
         }
-    }
 
-?>
+    }
