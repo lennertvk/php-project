@@ -7,6 +7,7 @@
         private $fullname;
         private $password;
         private $passwordconfirmation;
+        private $passwordlogin;
 
 
         private $bio;
@@ -85,8 +86,9 @@
                 $options = [
                     'cost' => 16, 
                 ];
-                $this->password = password_hash($this->password, PASSWORD_DEFAULT, $options);
-            
+                //$this->password = password_hash($this->password, PASSWORD_DEFAULT, $options);
+                $this->password = password_hash($this->password, PASSWORD_DEFAULT);
+
                 return $this;
         }
 
@@ -106,6 +108,26 @@
         public function setPasswordconfirmation($passwordconfirmation)
         {
                 $this->passwordconfirmation = $passwordconfirmation;
+
+                return $this;
+        }
+
+                /**
+         * Get the value of passwordlogin
+         */ 
+        public function getPasswordlogin()
+        {
+                return $this->passwordlogin;
+        }
+
+        /**
+         * Set the value of passwordlogin
+         *
+         * @return  self
+         */ 
+        public function setPasswordlogin($passwordlogin)
+        {
+                $this->passwordlogin = $passwordlogin;
 
                 return $this;
         }
@@ -149,24 +171,26 @@
                 $statement = $conn->prepare("SELECT * FROM users WHERE email = :email");
                 
                 //parameter binden
-                $statement->bindParam(":email",$this->email);
+                $statement->bindParam(":email", $this->email);
                 $result = $statement->execute();
                 
                 //array overzetten naar variable
-                $user = $statement->fetch(PDO::FETCH_ASSOC);
+                $user = $statement->fetchAll();
 
                 $options2 = [
                         'cost' => 16, 
                     ];
         
-                if (password_verify($this->password, $user['password'])) {
+                if (password_verify($this->passwordlogin, $user[0]['password'])) {
                     echo 'Password is valid!';
                     session_start();
                     header('Location: index.php');
                     return true;
                 }
                  else {
-                     echo 'Password is invalid!';
+                         var_dump($this->passwordlogin);
+                        var_dump($user[0]);
+                     //echo 'Password is invalid!';
                     //display error message
                     return false;
             
@@ -369,5 +393,7 @@
                 $User = $statement -> fetchAll();
                 return $User;
         }
+
+
 
     }

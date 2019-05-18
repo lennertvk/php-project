@@ -1,18 +1,38 @@
 <?php
     require_once("classes/user.class.php");
+/*
+    $conn= new PDO("mysql:host=localhost;dbname=php-project;","root","", null);
+    $admin = "admin@admin.com";
+    $statement = $conn->prepare("SELECT * FROM users WHERE email = '$admin'");
+    $result = $statement->execute();
+    $user = $statement->fetchAll();
 
-    if(!empty($_POST['Email']) && !empty($_POST['Password'])){
+    var_dump($user);
+*/
+/*
+$hash = '$2y$16$HduIzziNeBVOA8rDcmZf6eDogVYwBLdO0QkBdMcxqHFJTv6bPdORW';
+var_dump($hash);
+if (password_verify('test', $hash)) {
+    echo 'Password is valid!';
+} else {
+    echo 'Invalid password.';
+}
+/*
+    if(!empty($_POST['email']) && !empty($_POST['password'])){
         //is het formulier compleet?
         
-        $user = new User();
-        $user->setEmail($_POST['Email']);
-        $user->setPassword($_POST['Password']);
-        
-        $email = $_POST['Email'];
-        $password = $_POST['Password'];
+        $user = new User();        
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+
+        $user->setEmail($email);
+        $user->setPasswordlogin($password);
         
         $result = $user->login();
-        
+
+        //var_dump($email);
+        //var_dump($password);
+
         if($result == false){
             $error = true;
         }
@@ -48,11 +68,11 @@ sql injectie
 
                 <div class="form__field">
                     <label for="Email">Email</label>
-                    <input type="text" name="Email" id="Email" placeholder="Your email here">
+                    <input type="text" name="email" id="Email" placeholder="Your email here">
                 </div>
                 <div class="form__field">
                     <label for="Password">Password</label>
-                    <input type="password" id="Password" name="Password" placeholder="Your password here">
+                    <input type="password" id="Password" name="password" placeholder="Your password here">
                 </div>
 
                 <div class="form__field">
