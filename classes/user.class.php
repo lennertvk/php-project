@@ -144,9 +144,9 @@
         public function login(){
         
             try{
-                $conn = Db::getInstance();
-                //$conn= new PDO("mysql:host=localhost;dbname=php-project;","root","", null);
-                $statement = $conn->prepare("select * from users where email = :email");
+                //$conn = Db::getInstance();
+                $conn= new PDO("mysql:host=localhost;dbname=php-project;","root","", null);
+                $statement = $conn->prepare("SELECT * FROM users WHERE email = :email");
                 
                 //parameter binden
                 $statement->bindParam(":email",$this->email);
@@ -154,9 +154,13 @@
                 
                 //array overzetten naar variable
                 $user = $statement->fetch(PDO::FETCH_ASSOC);
-                
+
+                $options2 = [
+                        'cost' => 16, 
+                    ];
+        
                 if (password_verify($this->password, $user['password'])) {
-                    //echo 'Password is valid!';
+                    echo 'Password is valid!';
                     session_start();
                     header('Location: index.php');
                     return true;

@@ -1,8 +1,15 @@
 <?php
-session_start();
-
 require_once "classes/location.class.php";
 require_once "classes/upload.class.php";
+require_once "classes/Checksession.class.php";
+require_once('bootstrap.php');
+
+session_start();
+$sessionemail = $_SESSION["email"];
+$checkSession = new CheckingSession();
+$isSession = $checkSession->checkSession($sessionemail);
+
+
 
 
 function imagecreatefromfile( $filename ) {

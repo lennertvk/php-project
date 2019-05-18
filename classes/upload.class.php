@@ -111,7 +111,7 @@ require_once('bootstrap.php');
 
         public function uploadBig(){
             $conn = Db::getInstance();
-            $statement = $conn->prepare("INSERT INTO images (image, text, datum, tijd, place, titel) VALUES (:image, :desc, CURDATE(), CURTIME(), :place), :title");
+            $statement = $conn->prepare("INSERT INTO images (image, text, datum, tijd, place, titel) VALUES (:image, :desc, CURDATE(), CURTIME(), :place, :title)");
             $statement->bindParam(":image", $this->image);
             $statement->bindParam(":title", $this->title);
             $statement->bindParam(":desc", $this->desc);
@@ -123,7 +123,7 @@ require_once('bootstrap.php');
 
         public function uploadSmall(){
             $conn = Db::getInstance();
-            $statement = $conn->prepare("INSERT INTO images (image, text, minified, datum, tijd, place,titel) VALUES (:imagemini, :desc, '1', CURDATE(), CURTIME(), :place), :title");
+            $statement = $conn->prepare("INSERT INTO images (image, text, minified, datum, tijd, place) VALUES (:imagemini, :desc, '1', CURDATE(), CURTIME(), :place, :title)");
             $statement->bindParam(":imagemini", $this->imagemini);
             $statement->bindParam(":desc", $this->desc);
             $statement->bindParam(":title", $this->title);

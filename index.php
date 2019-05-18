@@ -7,7 +7,7 @@ require_once 'classes/Checksession.class.php';
   $checkSession = new CheckingSession();
   $isSession = $checkSession->checkSession($sessionemail);
 
-  var_dump($sessionemail);
+  //var_dump($sessionemail);
 
   $conn = Db::getInstance();
   //$conn= new PDO("mysql:host=localhost;dbname=php-project;","root","root", null);
