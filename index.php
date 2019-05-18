@@ -3,12 +3,22 @@ require_once('bootstrap.php');
  // require_once('like.php');
 require_once 'classes/Checksession.class.php';
   session_start();
+  //checken of session actief is
   $sessionemail = $_SESSION["email"];
   $checkSession = new CheckingSession();
   $isSession = $checkSession->checkSession($sessionemail);
 
-  //var_dump($sessionemail);
+  var_dump($sessionemail);
+  //session Id zoeken
+  $id = new CheckingSession();
+  $idResult = $id->searchId($sessionemail);
+ 
+  foreach ($idResult as $i):
+    var_dump($i['id']);
+    $_SESSION['userid'] =  $i['id'];
+    endforeach;
 
+  
   $conn = Db::getInstance();
   //$conn= new PDO("mysql:host=localhost;dbname=php-project;","root","root", null);
   $statement = $conn->prepare("SELECT * FROM images WHERE minified = 1");
@@ -72,7 +82,8 @@ require_once 'classes/Checksession.class.php';
 </div>
     <br>
     <button class="loadmore" id="loadmorebtn">Load more images</button>
-
+    
+      
 </body>
 
 <script
