@@ -1,8 +1,0 @@
-{
-    "require": {
-        "opencage/geocode": "^2.0",
-        "willdurand/geocoder": "^4.2",
-        "guzzlehttp/guzzle": "~6.0",
-        "php-http/guzzle6-adapter": "^2.0"
-    }
-}

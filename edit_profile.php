@@ -28,6 +28,7 @@ if(!empty($_POST["edit"])) {
     $user_edit->setBio($_POST["bio"]);
     $user_edit->setImage($destination);
     if($user_edit->update()){
+        $_SESSION["email"] = $_POST['email'];
         $message = "Your profile is updated.";
     } else {
         $error = "Something went wrong, profile isn't updated.";

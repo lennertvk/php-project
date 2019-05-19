@@ -27,6 +27,14 @@ class Http{
         $result = $statement->fetchAll();
         return $result;
     }
+
+    public function get_reports(){
+        $conn = new PDO("mysql:host=localhost;dbname=php-project;","root","", null);
+        $statement = $conn->prepare("SELECT * FROM reported_images");
+        $result = $statement->execute();  
+        $result = $statement->fetchAll();
+        return $result;
+    }
 }
 
 if(isset($_GET["start"])){
@@ -38,15 +46,18 @@ if(isset($_GET["start"])){
     $data = $http->get_data($start, $limit);
     $data2 = $http->get_likes();
     $data3 = $http->get_all_data();
+    $data4 = $http->get_reports();
 
     $data = json_encode($data);
     $data2 = json_encode($data2);
     $data3 = json_encode($data3);
+    $data4 = json_encode($data4);
 
     $dataarray = array(
         'dataimage' => "$data",
         'datalikes' => "$data2",
-        'alldata'   => "$data3"
+        'alldata'   => "$data3",
+        'reports'   => "$data4"
     );
 
     echo json_encode($dataarray);

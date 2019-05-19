@@ -17,24 +17,25 @@ function innappropriate(e){
 
 function checktimesreported(button){
     let postid = button.id;
+  //  document.getElementById(postid).classList.add("hide");
     let ajax =  new XMLHttpRequest();
-    ajax.open("GET", "Http.php?start=" + start + "&limit=" + limit, true);
+    ajax.open("GET", "classes/Http.php?start=" + start + "&limit=" + limit, true);
     ajax.send();
 
     ajax.onreadystatechange = function(){
         if(this.readyState == 4 && this.status == 200){
             let data = JSON.parse(this.responseText);
             data = JSON.parse(data.alldata);
-            //console.log(data);
 
             for(let i = 0; i < data.length; i++){
                 if(data[i].id = postid){
-                    if(data[i].reported > 2 ){
+                    if(data[i].display === 0 ){
                         //console.log("de image is al teveel gerapporteerd");
                         document.getElementById(postid).classList.add("hide");
                     }
                 }
             }
+            
 
         }       
     }

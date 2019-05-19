@@ -10,8 +10,6 @@ $checkSession = new CheckingSession();
 $isSession = $checkSession->checkSession($sessionemail);
 
 
-
-
 function imagecreatefromfile( $filename ) {
 	if (!file_exists($filename)) {
 			throw new InvalidArgumentException('File "'.$filename.'" not found.');
@@ -41,7 +39,7 @@ function imagecreatefromfile( $filename ) {
   // Initialize message variable
   $msg = "";
 	$userid = $_SESSION['userid'];
-		var_dump($userid);
+		//var_dump($userid);
   if (isset($_POST['upload'])) {
 		
     // Get image name

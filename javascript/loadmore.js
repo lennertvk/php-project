@@ -3,7 +3,7 @@ let limit = 20;
 
 function getData(){
     let ajax =  new XMLHttpRequest();
-    ajax.open("GET", "Http.php?start=" + start + "&limit=" + limit, true);
+    ajax.open("GET", "classes/Http.php?start=" + start + "&limit=" + limit, true);
     ajax.send();
 
     ajax.onreadystatechange = function(){
