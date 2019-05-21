@@ -112,16 +112,33 @@ function imagecreatefromfile( $filename ) {
     <title>Search results</title>
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/style.css">
+		<link rel="stylesheet" href="css/cssgram.min.css">
 <title>Image Upload</title>
 </head>
 <body>
+<script type="text/javascript">
+  function upload_img(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#img_id').attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+	}
+</script>
 <?php include_once('includes/nav.inc.php')?>
 <div id="content">
 
   <form method="POST" action="upload.php" enctype="multipart/form-data">
-  	<input type="hidden" name="size" value="1000000">
+  	<!--<input type="hidden" name="size" value="1000000">-->
   	<div>
-  	  <input type="file" name="image" required>
+  	  <input type="file" id ="imgInp" name="image" onchange="upload_img(this);" required>
+			<figure class="">
+				<img id="img_id" src="#" alt="your image" width="450px" height="auto" />
+			</figure>
 		</div>
 		<div>
 		<input id="title"  type="text" name="title" placeholder= "A good title..."required>
@@ -153,5 +170,6 @@ function imagecreatefromfile( $filename ) {
   crossorigin="anonymous"></script>
 
 <script src="javascript/getlocation.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script
 </body>
 </html>
