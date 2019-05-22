@@ -180,7 +180,7 @@
                 $options2 = [
                         'cost' => 16, 
                     ];
-        
+                    $check = "check";
                 if (password_verify($this->passwordlogin, $user[0]['password'])) {
                     echo 'Password is valid!';
                     session_start();
@@ -188,9 +188,9 @@
                     return true;
                 }
                  else {
-                         var_dump($this->passwordlogin);
-                        var_dump($user[0]);
-                     //echo 'Password is invalid!';
+                       // var_dump($this->passwordlogin);
+                       // var_dump($user[0]['password']);
+                     echo 'Password is invalid!';
                     //display error message
                     return false;
             

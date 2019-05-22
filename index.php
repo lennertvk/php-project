@@ -103,7 +103,7 @@ require_once('bootstrap.php');
 let likeclick = function(e){
     let id = e.id + "id";
     let amlikes = document.getElementById(id).innerHTML;
-    
+    console.log('like');
     document.getElementById(id).innerHTML = parseInt(amlikes) + 1;
 
     e.classList.remove("like");
