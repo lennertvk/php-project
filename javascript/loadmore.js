@@ -37,7 +37,9 @@ function getData(){
             if(data[i].display == 1){ 
                 html += "<div class='img_div'  id="+ data[i].id +">";
                 html += "<button class='inapropriate' id="+ data[i].id +" onclick='innappropriate(this);checktimesreported(this)'>inappropriate</button>";
+                html += "<figure class="+ data[i].filter +">";
                 html += "<img src='miniimages/"+ data[i].image +"'>";
+                html += "</figure>";
                 html += "<p>"+data[i].text+"</p>";
                 html += "<p><span id='"+ data[i].id +"id'>" + data[i].image_likes + "</span> Likes</p>";
                 html += "<span class='place'>Place: "+ data[i].place +"</span>";

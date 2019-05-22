@@ -67,6 +67,7 @@ require_once('bootstrap.php');
     <title>Homepage</title>
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/cssgram.min.css">
 </head>
 <body>
   <?php include_once('includes/nav.inc.php')?>

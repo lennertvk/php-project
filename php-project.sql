@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.5
+-- version 4.8.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Gegenereerd op: 16 mei 2019 om 11:30
--- Serverversie: 10.1.38-MariaDB
--- PHP-versie: 7.3.2
+-- Gegenereerd op: 22 mei 2019 om 21:42
+-- Serverversie: 10.1.37-MariaDB
+-- PHP-versie: 7.3.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -52,20 +52,29 @@ CREATE TABLE `images` (
   `datum` date NOT NULL,
   `tijd` time NOT NULL,
   `display` int(1) NOT NULL DEFAULT '1',
-  `place` varchar(255) NOT NULL
+  `place` varchar(255) NOT NULL,
+  `filter` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Gegevens worden geëxporteerd voor tabel `images`
 --
 
-INSERT INTO `images` (`id`, `image`, `text`, `minified`, `image_likes`, `reported`, `titel`, `userid`, `datum`, `tijd`, `display`, `place`) VALUES
-(434, 'DD_keto-meals_feat.jpg', 'test1', NULL, 0, 0, '', 0, '2019-05-16', '10:23:38', 1, 'Mechelen'),
-(435, 'miniDD_keto-meals_feat.jpg', 'test1', 1, 0, 0, '', 0, '2019-05-16', '10:23:38', 1, 'Mechelen'),
-(436, 'veganpowerbowls-2157-5-683x1024.jpg', 'test2', NULL, 0, 0, '', 0, '2019-05-16', '10:23:44', 1, 'Mechelen'),
-(437, 'miniveganpowerbowls-2157-5-683x1024.jpg', 'test2', 1, 0, 0, '', 0, '2019-05-16', '10:23:44', 1, 'Mechelen'),
-(438, '5783153.jpg', 'test3', NULL, 0, 0, '', 0, '2019-05-16', '10:23:50', 1, 'Mechelen'),
-(439, 'mini5783153.jpg', 'test3', 1, 0, 0, '', 0, '2019-05-16', '10:23:50', 1, 'Mechelen');
+INSERT INTO `images` (`id`, `image`, `text`, `minified`, `image_likes`, `reported`, `titel`, `userid`, `datum`, `tijd`, `display`, `place`, `filter`) VALUES
+(434, 'DD_keto-meals_feat.jpg', 'test1', NULL, 0, 0, '', 0, '2019-05-16', '10:23:38', 1, 'Mechelen', ''),
+(435, 'miniDD_keto-meals_feat.jpg', 'test1', 1, 0, 0, '', 0, '2019-05-16', '10:23:38', 1, 'Mechelen', ''),
+(436, 'veganpowerbowls-2157-5-683x1024.jpg', 'test2', NULL, 0, 0, '', 0, '2019-05-16', '10:23:44', 1, 'Mechelen', ''),
+(437, 'miniveganpowerbowls-2157-5-683x1024.jpg', 'test2', 1, 0, 0, '', 0, '2019-05-16', '10:23:44', 1, 'Mechelen', ''),
+(438, '5783153.jpg', 'test3', NULL, 0, 0, '', 0, '2019-05-16', '10:23:50', 1, 'Mechelen', ''),
+(439, 'mini5783153.jpg', 'test3', 1, 0, 0, '', 0, '2019-05-16', '10:23:50', 1, 'Mechelen', ''),
+(440, 'aCqVMH3.jpg', 'keyyy', NULL, 0, 0, 'testing key', 0, '2019-05-16', '17:20:58', 1, 'hieer', ''),
+(441, 'miniaCqVMH3.jpg', 'keyyy', 1, 0, 0, 'testing key', 0, '2019-05-16', '17:20:58', 1, 'hieer', ''),
+(454, '20190121_165728.jpg', 'zzz', NULL, 0, 0, 'test', 0, '2019-05-16', '18:12:10', 1, 'Weerde', ''),
+(455, 'mini20190121_165728.jpg', 'zzz', 1, 0, 0, 'test', 0, '2019-05-16', '18:12:10', 1, 'Weerde', ''),
+(456, 'download.jpg', 'this is a test to see if userid is set', NULL, 0, 0, 'michael myers', 21, '2019-05-16', '18:54:02', 1, 'Weerde', ''),
+(457, 'minidownload.jpg', 'this is a test to see if userid is set', 1, 0, 0, 'michael myers', 21, '2019-05-16', '18:54:02', 1, 'Weerde', ''),
+(472, 'paw 1.png', 'I used the Moon filter', NULL, 0, 0, 'a post with filter', 25, '2019-05-22', '21:31:09', 1, 'Weerde', 'moon'),
+(473, 'minipaw 1.png', 'I used the Moon filter', 1, 0, 0, 'a post with filter', 25, '2019-05-22', '21:31:09', 1, 'Weerde', 'moon');
 
 -- --------------------------------------------------------
 
@@ -121,7 +130,12 @@ INSERT INTO `users` (`id`, `email`, `fullname`, `password`, `bio`, `image`) VALU
 (17, 'test@test.com', 'test 23', '$2y$16$8OCTQS6Gx09iDaKsVs4hsuMdud/TeTiyIEDeTuAbxJ0LCvieyE.xS', '', ''),
 (18, 'test@test.com', 'test4', '$2y$16$rOkz5C0ZowXi934cIRNyAOD0a7hLu4E4T7SFWY.evjUiYldZPIkmi', '', ''),
 (19, 'fjklqsdj@test1116.ocm', 'lennert van kerckhove', '$2y$16$Nsu8mQshHf/i8ePcqT1x3uRReLMRY3uOxzn22m1vYCHDPIlUbK3tW', '', ''),
-(20, 'test@test.com', 'test session 3', '$2y$16$0ajH8i8yGJYZYcR5lLiyo.pVJYpYYbn5jXC.fDXhslb76SwMfLKTa', '', '');
+(20, 'test@test.com', 'test session 3', '$2y$16$0ajH8i8yGJYZYcR5lLiyo.pVJYpYYbn5jXC.fDXhslb76SwMfLKTa', '', ''),
+(21, 'key', 'keytest', '$2y$16$fBmy6PKzFRlewxeHSkDSlu0ySMIcIlfsynK2REllWQwzH9CngJNQm', '', ''),
+(22, 'justin.bugtong@gmail.com', 'justin bugtong', '$2y$16$JtQYgHz9OG0JBmeUkrftYulGdRknCpgz6uB6qabR/DOlqLKHsIhZS', '', ''),
+(23, 'email', 'fullname', '$2y$16$iYH5ux2IzDtE13uyZpPs7eBcLhU0cp.DljvkcqOiYboMLtQ6qD3na', '', ''),
+(24, 'justin.bugtong@gmail.com', 'Miguel Lammens', '$2y$16$U.0fmPLTZEj1aqyJtclhKuO4kMoXjb8yFuPf2V51braE48TNe.Fgq', '', ''),
+(25, 'justin.bugtong@gmail.com', 'Miguel Lammens', '$2y$16$7f/m1gH/7Oo/f/YdToUGSuyDq2dllsH5M44ktQKqLqtaGxcCWXdbK', '', '');
 
 --
 -- Indexen voor geëxporteerde tabellen
@@ -161,7 +175,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT voor een tabel `images`
 --
 ALTER TABLE `images`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=440;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=474;
 
 --
 -- AUTO_INCREMENT voor een tabel `likes`
@@ -173,13 +187,13 @@ ALTER TABLE `likes`
 -- AUTO_INCREMENT voor een tabel `test`
 --
 ALTER TABLE `test`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=106;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT voor een tabel `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

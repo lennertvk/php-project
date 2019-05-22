@@ -9,6 +9,7 @@ require_once('bootstrap.php');
         private $imagemini;
         private $location;
         private $userid;
+        private $filter;
 
 
 
@@ -18,7 +19,16 @@ require_once('bootstrap.php');
 
 	public function setUserid($userid){
 		$this->userid = $userid;
+        }
+        
+	public function getFilter(){
+		return $this->filter;
 	}
+
+	public function setFilter($filter){
+		$this->filter = $filter;
+	}
+
 /**
          * Get the value of image
          */ 
@@ -121,12 +131,13 @@ require_once('bootstrap.php');
 
         public function uploadBig(){
             $conn = Db::getInstance();
-            $statement = $conn->prepare("INSERT INTO images (image, text, datum, tijd, place, titel,userid) VALUES (:image, :desc, CURDATE(), CURTIME(), :place, :title, :userid)");
+            $statement = $conn->prepare("INSERT INTO images (image, text, datum, tijd, place, titel,userid, filter) VALUES (:image, :desc, CURDATE(), CURTIME(), :place, :title, :userid, :filter)");
             $statement->bindParam(":image", $this->image);
             $statement->bindParam(":title", $this->title);
             $statement->bindParam(":userid", $this->userid);
             $statement->bindParam(":desc", $this->desc);
             $statement->bindParam(":place", $this->location);
+            $statement->bindParam(":filter", $this->filter);
 
             $result = $statement->execute();
             return $result;
@@ -134,12 +145,13 @@ require_once('bootstrap.php');
 
         public function uploadSmall(){
             $conn = Db::getInstance();
-            $statement = $conn->prepare("INSERT INTO images (image, text, minified, datum, tijd, place, titel, userid) VALUES (:imagemini, :desc, '1', CURDATE(), CURTIME(), :place, :title, :userid)");
+            $statement = $conn->prepare("INSERT INTO images (image, text, minified, datum, tijd, place, titel, userid, filter) VALUES (:imagemini, :desc, '1', CURDATE(), CURTIME(), :place, :title, :userid, :filter)");
             $statement->bindParam(":imagemini", $this->imagemini);
             $statement->bindParam(":userid", $this->userid);
             $statement->bindParam(":desc", $this->desc);
             $statement->bindParam(":title", $this->title);
             $statement->bindParam(":place", $this->location);
+            $statement->bindParam(":filter", $this->filter);    
 
             $result = $statement->execute();
             return $result;
