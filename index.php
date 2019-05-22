@@ -1,6 +1,7 @@
 <?php
 require_once('bootstrap.php');
  // require_once('like.php');
+ 
   require_once 'classes/Checksession.class.php';
   session_start();
   //checken of session actief is
