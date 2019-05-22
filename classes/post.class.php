@@ -52,15 +52,6 @@ class Post{
         $searchResult = $statement -> fetchAll();
         return $searchResult;
     }
-
-    /*public function searchUser($query){
-        $conn = Db::getInstance();
-        $statement= $conn->prepare("SELECT * FROM users Where fullname like :query");
-        $statement->bindValue(":query",'%'.$query.'%',PDO::PARAM_STR);
-        $statement->execute();
-        $User = $statement -> fetchAll();
-        return $User;
-    }*/
     
     public function photoId($query){
         $conn = Db::getInstance();

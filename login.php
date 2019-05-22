@@ -1,11 +1,13 @@
 <?php
     require_once("classes/user.class.php");
+    /*
     $conn = new PDO("mysql:host=localhost;dbname=php-project;","root","", null);
     $statement = $conn->prepare("SELECT * FROM reported_images");
     $result = $statement->execute();  
     $result = $statement->fetchAll();
 
-    var_dump($result);
+
+    //var_dump($result);
 /*
     $conn= new PDO("mysql:host=localhost;dbname=php-project;","root","", null);
     $admin = "admin@admin.com";
@@ -23,7 +25,8 @@ if (password_verify('test', $hash)) {
 } else {
     echo 'Invalid password.';
 }
-/*
+*/
+
     if(!empty($_POST['email']) && !empty($_POST['password'])){
         //is het formulier compleet?
         

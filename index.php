@@ -103,7 +103,6 @@ require_once('bootstrap.php');
 let likeclick = function(e){
     let id = e.id + "id";
     let amlikes = document.getElementById(id).innerHTML;
-    
     document.getElementById(id).innerHTML = parseInt(amlikes) + 1;
 
     e.classList.remove("like");
@@ -129,7 +128,7 @@ let unlikeclick = function(e){
     e.setAttribute( "onClick", "javascript: likeclick(this);" );
 
     e.innerHTML = "like";
-        //AJAX CALL HIERIN ZETTEN???
+    //AJAX CALL HIERIN ZETTEN???
 
 }
 </script>

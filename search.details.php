@@ -13,13 +13,16 @@
     <title><?php echo $key['titel']; ?></title>
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/cssgram.min.css">
 </head>
 <body>
 <?php include_once('includes/nav.inc.php')?>
 <h2><?php echo $key['titel']; ?></h2>
 <div>
 <?php 
+    echo "<figure class='".$key['filter']."'>";
     echo "<img src='miniimages/".$key['image']."'width='450px'>";
+    echo "</figure>";
     echo "<br>";
     echo "<label>gepost op: ".$key['datum']." ".$key['tijd']."</label>";
     echo "<br>";
