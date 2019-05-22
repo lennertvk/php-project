@@ -3,12 +3,10 @@
     $query = $_GET['search'];
     $search = new Post();
     $searchResult=$search->search($query);
-    //$search2 = new Post();
-    //$User = $search2->searchUser($query);
+   
     
     var_dump($searchResult);
-    //echo "<br><br>";
-    //var_dump($User);
+    
 ?>
  
 <!DOCTYPE html>
@@ -20,6 +18,7 @@
     <title>Search results</title>
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/cssgram.min.css">
 </head>
 <body>
 <?php include_once('includes/nav.inc.php')?>
@@ -30,10 +29,11 @@
 ?>
 <div>
 <?php 
+    echo "<figure class='".$key['filter']."'>";
     echo "<img src='miniimages/".$key['image']."'width='250px'>";
+    echo "</figure>";
 ?>
 <a href="search.details.php?search=<?php echo $key['id'];?>"><?php echo $key['titel']; ?></a>
-<!--<a href="profile.php?search=<?php //echo $u['id'];?>"><?php //echo $u['fullname']; ?></a>-->
 </div>
 <?php endforeach; ?>
 
